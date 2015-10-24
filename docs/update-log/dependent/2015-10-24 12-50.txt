@@ -1,0 +1,58 @@
+初始化安装项目
+
+  - Installing yiisoft/yii2-composer (2.0.3)
+    Downloading: 100%
+
+  - Installing ezyang/htmlpurifier (v4.6.0)
+    Downloading: 100%
+
+  - Installing bower-asset/jquery (2.1.4)
+    Loading from cache
+
+  - Installing bower-asset/yii2-pjax (v2.0.4)
+    Loading from cache
+
+  - Installing bower-asset/punycode (v1.3.2)
+    Loading from cache
+
+  - Installing bower-asset/jquery.inputmask (3.1.6
+    Loading from cache
+
+  - Installing cebe/markdown (1.1.0)
+    Downloading: 100%
+
+  - Installing yiisoft/yii2 (2.0.6)
+    Downloading: 100%
+
+  - Installing swiftmailer/swiftmailer (v5.4.1)
+    Downloading: 100%
+
+  - Installing yiisoft/yii2-swiftmailer (2.0.4)
+    Downloading: 100%
+
+  - Installing yiisoft/yii2-codeception (2.0.4)
+    Downloading: 100%
+
+  - Installing bower-asset/bootstrap (v3.3.5)
+    Loading from cache
+
+  - Installing yiisoft/yii2-bootstrap (2.0.5)
+    Loading from cache
+
+  - Installing yiisoft/yii2-debug (2.0.5)
+    Downloading: 100%
+
+  - Installing bower-asset/typeahead.js (v0.10.5)
+    Loading from cache
+
+  - Installing phpspec/php-diff (v1.0.2)
+    Downloading: 100%
+
+  - Installing yiisoft/yii2-gii (2.0.4)
+    Downloading: 100%
+
+  - Installing fzaninotto/faker (v1.5.0)
+    Downloading: 100%
+
+  - Installing yiisoft/yii2-faker (2.0.3)
+    Downloading: 100%
