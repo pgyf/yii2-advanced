@@ -8,9 +8,15 @@ $params = array_merge(
 
 return [
     'id' => 'app-backend',
+    'name' => 'XX后台管理系统',
+    'defaultRoute' => 'site/index',
+    'language' => 'zh-CN', //en-US zh-CN
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
-    'bootstrap' => ['log'],
+    'bootstrap' => [
+        'log',
+        'backend\lib\base\AppBootstrap',
+    ],
     'modules' => [
         'admin' => [
             'class' => 'mdm\admin\Module',
@@ -18,8 +24,9 @@ return [
     ],
     'components' => [
         'user' => [
-            'identityClass' => 'common\models\User',
+            //'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
+            'loginUrl' => ['site/login'],
         ],
         'authManager' => [
             'class' => 'yii\rbac\DbManager', // or use 'yii\rbac\PhpManager'
@@ -39,12 +46,14 @@ return [
             ],
         ],
     ],
-//    'as access' => [
-//        'class' => 'mdm\admin\components\AccessControl',
-//        'allowActions' => [
-//            'site/*',
-//            'admin/*', //生产环境应该移除
-//        ]
-//    ],
+    'as access' => [
+        'class' => 'mdm\admin\components\AccessControl',
+        'allowActions' => [
+            'site/*',
+            'admin/*', //生产环境应该移除
+            'gii/*', //生产环境应该移除
+            'debug/*', //生产环境应该移除
+        ]
+    ],
     'params' => $params,
 ];

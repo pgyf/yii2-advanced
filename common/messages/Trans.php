@@ -26,7 +26,7 @@ class Trans{
     
     public static function t($message, $params = [], $language = null)
     {
-        return  static::tCategory('common', $message, $params, $language);
+        return  static::tCategory('app', $message, $params, $language);
     }
     
     public static function tModel($category, $message, $params = [], $language = null)

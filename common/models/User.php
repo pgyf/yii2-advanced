@@ -1,38 +1,18 @@
 <?php
+
 namespace common\models;
 
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
+use common\lib\enum\EnumUser;
+use common\lib\validators\PhoneValidator;
+use common\lib\enum\EnumAPP;
+use common\messages\Trans;
 
-/**
- * User model
- *
- * @property integer $id
- * @property string $username
- * @property string $password_hash
- * @property string $password_reset_token
- * @property string $email
- * @property string $auth_key
- * @property integer $status
- * @property integer $created_at
- * @property integer $updated_at
- * @property string $password write-only password
- */
-class User extends ActiveRecord implements IdentityInterface
+class User extends \common\models\table\User implements IdentityInterface
 {
-    const STATUS_DELETED = 0;
-    const STATUS_ACTIVE = 10;
-
-    /**
-     * @inheritdoc
-     */
-    public static function tableName()
-    {
-        return '{{%user}}';
-    }
 
     /**
      * @inheritdoc
@@ -40,27 +20,82 @@ class User extends ActiveRecord implements IdentityInterface
     public function behaviors()
     {
         return [
-            TimestampBehavior::className(),
+            [
+                'class' => TimestampBehavior::className(),
+                'createdAtAttribute' => 'create_time',
+                'updatedAtAttribute' => 'update_time',
+            ],
         ];
     }
 
     /**
-     * @inheritdoc
+     * rules
      */
     public function rules()
     {
+        return  array_merge(parent::rules(),
+        [
+            ['username', 'string', 'min' => 2, 'on' => ['backend-create','backend-update']],
+            ['username', 'string', 'min' => 6, 'except' => ['backend-create','backend-update']],
+            //只含有汉字、数字、字母、下划线不能以下划线开头和结尾
+            ['username', 'match', 'pattern' => '/^(?!_)(?!.*?_$)[a-zA-Z0-9_\u4e00-\u9fa5]+$'],
+            ['mobile', PhoneValidator::className()],
+            ['email', 'email'],
+            ['password', 'string', 'min' => 6],
+            ['type', 'default', 'value' => EnumUser::TYPE_USER, 'on' => 'register'],
+            ['type', 'in', 'range' => EnumUser::$frontendTypeList, 'on' => 'register'],
+            ['type', 'default', 'value' => EnumUser::TYPE_BACKEND_USER, 'on' => ['backend-create','backend-update']],
+            ['type', 'in', 'range' => [EnumUser::TYPE_BACKEND_USER], 'on' => 'backend-create','backend-update'],
+            ['status', 'default', 'value' => EnumUser::STATUS_ACTIVE],
+            ['status', 'in', 'range' => EnumUser::getAllValue(EnumUser::STATUS)],
+        ]);
+    }
+    
+    
+    /**
+     * 情景模式
+     */
+    public function scenarios()
+    {
         return [
-            ['status', 'default', 'value' => self::STATUS_ACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+            'register' => [
+                    'type', 'username', 'mobile','email', 'password', 'auth_key' , 'create_form_url', 'create_aouth_app' , 
+                    'create_app', 'create_device','create_time' ,'create_ip','status'
+                ],
+            'updatePwd' => 
+                [
+                    'password','update_user','update_time' , 'update_ip',
+                ],
+            'update-username' => 
+                [
+                    'username','update_user','update_time' , 'update_ip',
+                ],
+            'update-mobile' => 
+                [
+                    'mobile','update_user','update_time' , 'update_ip',
+                ],
+            'update-email' => 
+                [
+                    'email','update_user','update_time' , 'update_ip',
+                ],
+            'backend-create' => [
+                    'type', 'username','password', 'auth_key' , 'create_form_url', 'create_aouth_app' , 
+                    'create_app', 'create_device', 'create_user', 'create_time' ,'create_ip','status'
+                ],
+            'backend-update' => 
+                [
+                    'type','username', 'password','update_user','update_time' , 'update_ip',
+                ]
         ];
     }
+    
 
     /**
      * @inheritdoc
      */
     public static function findIdentity($id)
     {
-        return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
+        return static::find()->andWhere(['id' => $id ])->andWhere(['!=','status', EnumUser::STATUS_DELETED])->one();
     }
 
     /**
@@ -68,7 +103,8 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
+        return static::find()->andWhere(['access_token' => $token ])->andWhere(['!=','status', EnumUser::STATUS_DELETED])->one();
+        //throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
     }
 
     /**
@@ -79,7 +115,20 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public static function findByUsername($username)
     {
-        return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
+        return static::find()->andWhere(['username' => $username ])->andWhere(['!=','status', EnumUser::STATUS_DELETED])->one();
+    }
+    
+    /**
+     * Finds user by username,mobile,email
+     *
+     * @param string $username
+     * @return static|null
+     */
+    public static function findByAccount($username)
+    {
+        return static::find()->andWhere(['!=','status', EnumUser::STATUS_DELETED])
+                ->orWhere(['username' => $username ],['mobile' => $username ],['email' => $username ])
+                ->all();
     }
 
     /**
@@ -93,11 +142,7 @@ class User extends ActiveRecord implements IdentityInterface
         if (!static::isPasswordResetTokenValid($token)) {
             return null;
         }
-
-        return static::findOne([
-            'password_reset_token' => $token,
-            'status' => self::STATUS_ACTIVE,
-        ]);
+        return static::find()->andWhere(['password_reset_token' => $token ])->andWhere(['!=','status', EnumUser::STATUS_DELETED])->one();
     }
 
     /**
@@ -149,7 +194,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function validatePassword($password)
     {
-        return Yii::$app->security->validatePassword($password, $this->password_hash);
+        return Yii::$app->security->validatePassword($password, $this->password);
     }
 
     /**
@@ -159,15 +204,19 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function setPassword($password)
     {
-        $this->password_hash = Yii::$app->security->generatePasswordHash($password);
+        $this->password = Yii::$app->security->generatePasswordHash($password);
     }
 
     /**
      * Generates "remember me" authentication key
+     * 自动登录时，cookie中的authkey
      */
     public function generateAuthKey()
     {
-        $this->auth_key = Yii::$app->security->generateRandomString();
+        if (!$this->isNewRecord) {
+            $this->auth_key = Yii::$app->security->generateRandomString();
+            $this->save(false,'auth_key');
+        }
     }
 
     /**
@@ -185,4 +234,46 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
+    
+    
+    
+    /**
+     * 验证登录应用和用户类型
+     * @param type $app
+     * @param type $msg
+     * @return boolean
+     */
+    public function validateUser($app, $msg = ""){
+        $userStatus = $this->status;
+        $userType = $this->type;
+        $inactives = EnumUser::statusInactive();
+        if($inactives && isset($inactives[$userStatus])){
+            $msg = $inactives[$userStatus];
+            return false;
+        }
+        if(in_array($app, EnumAPP::$backendAppList) &&in_array($userType,EnumUser::$backendTypeList)){
+            return true;
+        }
+        else if(in_array($app, EnumAPP::$frontendAppList) &&in_array($userType,EnumUser::$frontendTypeList)){
+            return true;
+        }
+        $msg =  Trans::tMsg('You do not have permission to sign in.');
+        return false;
+    }
+    
+    
+    public function beforeSave($insert) {
+       if (parent::beforeSave($insert)) {
+            if ($this->isNewRecord || (!$this->isNewRecord && $this->password)) {
+                $this->setPassword($this->password);
+            }
+            if($this->isNewRecord){
+                $this->auth_key = Yii::$app->security->generateRandomString();
+                $this->access_token = Yii::$app->security->generateRandomString();
+            }
+            return true;
+        }
+        return false;
+    }
+    
 }

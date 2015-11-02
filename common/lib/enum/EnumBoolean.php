@@ -2,16 +2,11 @@
 
 namespace common\lib\enum;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
+use common\messages\Trans;
 /**
  * Description of BooleanEnum
  *
- * @author WR
+ * @author lyf
  */
 class EnumBoolean extends EnumBase{
     
@@ -30,11 +25,14 @@ class EnumBoolean extends EnumBase{
 
     const SUCCESS = 'success';
     const SUCCESS_SUCCESS = 1;
-    const SUCCESS_FAIL= 0;
+    const SUCCESS_FAIL = 0;
     protected static function successList(){
         return [
             self::SUCCESS_SUCCESS => Trans::tEnum('Success'),
             self::SUCCESS_FAIL => Trans::tEnum('Fail'),
         ];
     }
+
+    
+    
 }

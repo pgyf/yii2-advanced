@@ -4,8 +4,9 @@ namespace backend\controllers;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
-use common\models\LoginForm;
+use common\models\form\LoginForm;
 use yii\filters\VerbFilter;
+use common\lib\enum\EnumAPP;
 
 /**
  * Site controller
@@ -65,7 +66,7 @@ class SiteController extends Controller
         }
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+        if ($model->load(Yii::$app->request->post()) && $model->login(EnumAPP::APP_WEB_ADMIN)) {
             return $this->goBack();
         } else {
             return $this->render('login', [

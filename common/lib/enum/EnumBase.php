@@ -3,6 +3,7 @@
 namespace common\lib\enum;
 
 use yii\helpers\ArrayHelper;
+use common\messages\Trans;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -43,7 +44,7 @@ abstract class EnumBase extends \yii\base\Object{
      * @param type $value
      * @return string $field = 'status'
      */
-    public static function getName($value , $field)
+    public static function getLabel($value , $field)
     {
         $list = static::getArrayList($field);
         if(isset($list[$value]))
@@ -60,6 +61,15 @@ abstract class EnumBase extends \yii\base\Object{
         $list = static::getArrayList($field);
         return $list;
     }
+    
+    
+    /**
+     * 获取所有值
+     */
+    public static function getAllValue($field){
+        return array_keys(static::getArrayList($field));
+    }
+    
     
     /**
      * 获取所有类型
@@ -84,6 +94,33 @@ abstract class EnumBase extends \yii\base\Object{
             return $list[$value];
         }
         return '';
+    }
+    
+//    
+//    public static function getLabels($list){
+//        foreach ($list as $k => $value) {
+//            $list[$k] = Trans::tEnum($value);
+//        }
+//        return $list;
+//    }
+    
+    
+  
+    const STATUS = 'status';
+    /**
+     * 禁用
+     */
+    const STATUS_DISABLED  = -1;
+    /**
+     * 已删除
+     */
+    const STATUS_DELETED = -2;
+  
+    protected static function statusList(){
+        return [
+            self::STATUS_DISABLED => Trans::tEnum('Disabled'),
+            self::STATUS_DELETED =>   Trans::tEnum('Deleted'),
+       ];
     }
     
 

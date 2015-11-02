@@ -3,13 +3,9 @@ $params = [
     'adminEmail' => 'admin@example.com',
     'supportEmail' => 'support@example.com',
     'user.passwordResetTokenExpire' => 3600,
-    'pager' => [
-        'pageSize' => 20,
-        'pageSizeList' => [10, 20, 30, 50],
-    ],
-    'captcha' => [
-        'login' => true,
-    ],
+    'pager.pageSize' => 20,
+    'pager.pageSizeList' => [10, 20, 30, 50],
+    'captcha.login' => true,
     'fileStorage' => [
         'fileTarget' => 'oss',
         'mode' => [

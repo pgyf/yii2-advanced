@@ -1,6 +1,8 @@
 <?php
 return [
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
+    'timeZone' => 'Asia/Shanghai', //'PRC'
+    'language' => 'zh-CN', //en-US zh-CN
     'components' => [
 //        'db' => [
 //            'class' => 'yii\db\Connection',
@@ -14,6 +16,12 @@ return [
 //            'schemaCache' => 'cache',
 //            'queryCache' => 'cache',
 //        ],
+        'user' => [
+            'class' =>  'common\lib\components\User',
+            'identityClass' => 'common\models\User',
+            'enableAutoLogin' => true,
+            'loginUrl' => ['site/login'],
+        ],
         'cache' => function(){
             return Yii::$app->fileCache;
         },
@@ -26,6 +34,15 @@ return [
             'class' => 'yii\caching\FileCache',
             'keyPrefix' => 'wechat_',
             'directoryLevel' => 2,
+        ],
+        'urlManager' => [
+            //'class' => 'yii\web\urlManager',
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'rules' => [
+                '<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
+                '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
+            ]
         ],
         'i18n'=> [
             'class' => 'yii\i18n\I18N',
@@ -49,9 +66,10 @@ return [
             'decimalSeparator' => '.',
             'thousandSeparator' => ',',
             'currencyCode' => 'CNY',
-            'defaultTimeZone' => 'Asia/Shanghai',
+            'timeZone' => 'UTC', //'PRC'
+            //'defaultTimeZone' => 'Asia/Shanghai',
 //            'locale' => 'zh-CN',
-//            'timeZone' => 'Asia/Shanghai', //'PRC'
+
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
