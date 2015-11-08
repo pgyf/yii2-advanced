@@ -3,6 +3,7 @@
 namespace common\models;
 
 use yii\behaviors\TimestampBehavior;
+use yii\db\BaseActiveRecord;
 
 /**
  * Description of UserLogin
@@ -12,8 +13,6 @@ use yii\behaviors\TimestampBehavior;
  */
 class UserLogin extends \common\models\table\UserLogin{
 
-    use ModelTrait;
-        
     /**
      * @inheritdoc
      */

@@ -16,12 +16,6 @@ return [
 //            'schemaCache' => 'cache',
 //            'queryCache' => 'cache',
 //        ],
-        'user' => [
-            'class' =>  'common\lib\components\User',
-            'identityClass' => 'common\models\User',
-            'enableAutoLogin' => true,
-            'loginUrl' => ['site/login'],
-        ],
         'cache' => function(){
             return Yii::$app->fileCache;
         },
@@ -51,11 +45,19 @@ return [
 //                    'class' => 'yii\i18n\PhpMessageSource',
 //                    'sourceLanguage' => 'en-US',
 //                    'basePath' => '@app/messages',
+//                    'forceTranslation' => true,
 //                ],
+                'language' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'sourceLanguage' => 'en-US', //'en-US',
+                    'basePath' => '@common/messages',
+                    'forceTranslation' => true,
+                ],
                 'common*' => [
                     'class' => 'yii\i18n\PhpMessageSource',
                     'sourceLanguage' => 'en-US',
                     'basePath' => '@common/messages',
+                    'forceTranslation' => true,
                 ],
             ],
         ],

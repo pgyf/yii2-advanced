@@ -19,18 +19,18 @@ class LoginForm extends Model
 {
     public $username;
     public $password;
-    public $captcha;
+    public $verifyCode;
     public $rememberMe = true;
-    private $_user;
+    private $_user = false;
     
     
     public function attributeLabels()
     {
         return [
-                'username' => Trans::t('Username'),
-                'password' => Trans::t('Password'),
-                'rememberMe' => Trans::t('Remember Me'),
-                'reCaptcha' => Trans::t('Verification Code'),
+                'username' => Yii::t('common/models/User', 'Username'),
+                'password' => Yii::t('common/models/User', 'Password'),
+                'rememberMe' => Yii::t('common/label', 'Remember Me'),
+                'verifyCode' => Yii::t('common/label', 'Verification Code'),
             ];
     }
     
@@ -48,14 +48,14 @@ class LoginForm extends Model
             // password is validated by validatePassword()
             ['password', 'validatePassword'],
             ['username', 'string', 'min' => 2],
-            ['captcha', 'required',
+            ['verifyCode', 'required',
                 'when' => function($model){
-                    return App::configParam('captcha.login', false);
+                    return App::param('captcha.login', false);
                 }
             ],
-            ['captcha', CaptchaValidator::className(), 
+            ['verifyCode', CaptchaValidator::className(), 
                 'when' => function($model){
-                   return App::configParam('captcha.login', false);
+                   return App::param('captcha.login', false);
                 }
             ],
         ];
@@ -84,14 +84,7 @@ class LoginForm extends Model
     {
         if (!$this->hasErrors()) {
             $user = $this->getUser();
-            if($user){
-                foreach ($user as $u) {
-                    if($u->validatePassword($this->password)){
-                        $this->_user = $u;
-                    }
-                }
-            }
-            if(!$this->_user){
+            if(!$user || !$user->validatePassword($this->password)){
                 $this->addError($attribute, Trans::tMsg('Incorrect username or password.'));
             }
         }
@@ -104,10 +97,10 @@ class LoginForm extends Model
      */
     public function login($app)
     {
-        if ($this->_user && $this->validate()) {
-            if($this->_user->validateUser($app, $errorMsg)){
+        if ($this->validate()) {
+            if($this->getUser()->validateUser($app, $errorMsg)){
                 $this->log($app, 1);
-                return Yii::$app->user->login($this->_user, $this->rememberMe ? 3600 * 24 * 30 : 0);
+                return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
             }
             else{
                 $this->addError('username', $errorMsg);
@@ -124,7 +117,10 @@ class LoginForm extends Model
      */
     protected function getUser()
     {
-        return User::findByAccount($this->username);
+        if ($this->_user === false) {
+            $this->_user = User::findByAccount($this->username);
+        }
+        return $this->_user;
     }
     
 

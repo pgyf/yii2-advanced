@@ -3,10 +3,10 @@
     return [
         'ID' => 'ID',
         'Type' => 'Type',
-        'Username' => 'Username',
+        'Username' => '账号',
         'Mobile' => 'Mobile',
         'Email' => 'Email',
-        'Password' => 'Password',
+        'Password' => '密码',
         'Auth Key' => 'Auth Key',
         'Access Token' => 'Access Token',
         'Create Form Url' => 'Create Form Url',

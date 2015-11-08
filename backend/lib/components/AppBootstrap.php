@@ -1,6 +1,6 @@
 <?php
 
-namespace backend\lib\base;
+namespace backend\lib\components;
 
 /**
  * Description of AppBootstrap
@@ -8,7 +8,7 @@ namespace backend\lib\base;
  * @author     lyf <381296986@qq.com>
  * @date       2015-11-2
  */
-class AppBootstrap extends \common\lib\base\AppBootstrap{
+class AppBootstrap extends \common\lib\components\AppBootstrap{
     
     public function bootstrap($app){
         parent::bootstrap($app);

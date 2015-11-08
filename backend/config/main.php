@@ -9,13 +9,13 @@ $params = array_merge(
 return [
     'id' => 'app-backend',
     'name' => 'XX后台管理系统',
-    'defaultRoute' => 'site/index',
+    'defaultRoute' => '/site/index',
     'language' => 'zh-CN', //en-US zh-CN
-    'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
+    'basePath' => dirname(__DIR__),
     'bootstrap' => [
         'log',
-        'backend\lib\base\AppBootstrap',
+        'backend\lib\components\AppBootstrap',
     ],
     'modules' => [
         'admin' => [
@@ -24,9 +24,10 @@ return [
     ],
     'components' => [
         'user' => [
-            //'identityClass' => 'common\models\User',
+            'class' =>  'common\lib\components\User',
+            'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
-            'loginUrl' => ['site/login'],
+            'loginUrl' => [0 => '/site/login'],
         ],
         'authManager' => [
             'class' => 'yii\rbac\DbManager', // or use 'yii\rbac\PhpManager'
@@ -34,7 +35,40 @@ return [
             'cache' => 'cache',   // this enables RBAC caching
         ],
         'errorHandler' => [
-            'errorAction' => 'site/error',
+            'errorAction' => '/site/error',
+        ],
+        'urlManager' => [
+            'class' => 'common\lib\components\UrlManager', //'yii\web\urlManager',
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            //'enableDefaultLanguageUrlCode' => true,
+            'languages' => ['cn' => 'zh-CN','en' => 'en-US'],
+            'ruleConfig' => [
+                'class' => 'yii\web\UrlRule', //'common\lib\components\LanguageUrlRule'
+                'encodeParams' => false,
+            ],
+            'rules' => [
+                '<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
+                '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
+            ]
+        ],
+        'view' => [
+            'theme' => [
+                   'class'=>'common\lib\components\Theme',
+                   'active'=>'adminlte',
+                   'pathMap' => [ 
+                        'adminlte' => [
+                           '@app/views' => ['@app/themes/adminlte/views']
+                        ],
+                    ],
+            ],
+        ],
+        'assetManager' => [
+            'bundles' => [
+                'dmstr\web\AdminLteAsset' => [
+                    'skin' => 'skin-black',
+                ],
+            ],
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,

@@ -2,6 +2,7 @@
 
 namespace common\lib\helpers;
 
+use Yii;
 use common\lib\enum\EnumUser;
 
 class App extends BaseApp
@@ -45,7 +46,7 @@ class App extends BaseApp
     }
     
     //app param
-    public static function configParam($key, $defaultValue = null)
+    public static function param($key, $defaultValue = null)
     {
         $params = Yii::$app->params;
         if(array_key_exists($key,$params))

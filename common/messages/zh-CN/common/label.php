@@ -18,9 +18,6 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'App name' => 'xx网站管理系统',
-    'No data' => '没有数据',
-    'Home' => '首页',
-    'Sign in' => '登录',
-    'Sign out' => '退出',
+    'Remember Me' => '记住我',
+    'Verification Code' => '验证码',
 ];

@@ -8,7 +8,7 @@ use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
-use common\widgets\Alert;
+use common\lib\widgets\Alert;
 
 AppAsset::register($this);
 ?>
@@ -46,10 +46,19 @@ AppAsset::register($this);
             'linkOptions' => ['data-method' => 'post']
         ];
     }
+    $menuItems[] = \common\messages\Trans::getLanguageNames();
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
+        'encodeLabels' => false,
         'items' => $menuItems,
     ]);
+    
+//    echo \common\lib\widgets\LanguagePicker::widget([
+//        'isAutoLabel' => true,
+//        'skin' => \common\lib\widgets\LanguagePicker::SKIN_DROPDOWN,
+//        'size' => \common\lib\widgets\LanguagePicker::SIZE_LARGE
+//    ]);
+    
     NavBar::end();
     ?>
 
@@ -57,6 +66,10 @@ AppAsset::register($this);
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
+        
+
+        
+        
         <?= Alert::widget() ?>
         <?= $content ?>
     </div>

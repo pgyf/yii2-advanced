@@ -69,6 +69,8 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->login(EnumAPP::APP_WEB_ADMIN)) {
             return $this->goBack();
         } else {
+//            \yii\helpers\VarDumper::dump($model->getErrors(), 10, true);
+//            exit;
             return $this->render('login', [
                 'model' => $model,
             ]);

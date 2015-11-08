@@ -127,8 +127,8 @@ class User extends \common\models\table\User implements IdentityInterface
     public static function findByAccount($username)
     {
         return static::find()->andWhere(['!=','status', EnumUser::STATUS_DELETED])
-                ->orWhere(['username' => $username ],['mobile' => $username ],['email' => $username ])
-                ->all();
+                ->andWhere(['or',['username' => $username ],['mobile' => $username ],['email' => $username ]])
+                ->one();
     }
 
     /**
@@ -211,12 +211,13 @@ class User extends \common\models\table\User implements IdentityInterface
      * Generates "remember me" authentication key
      * 自动登录时，cookie中的authkey
      */
-    public function generateAuthKey()
+    public static function generateAuthKey($event)
     {
-        if (!$this->isNewRecord) {
-            $this->auth_key = Yii::$app->security->generateRandomString();
-            $this->save(false,'auth_key');
-        }
+        //if (!$this->isNewRecord) {
+            $identity = $event->identity;
+            $identity->auth_key = Yii::$app->security->generateRandomString();
+            $identity->save(false,['auth_key']);
+        //}
     }
 
     /**
@@ -243,7 +244,7 @@ class User extends \common\models\table\User implements IdentityInterface
      * @param type $msg
      * @return boolean
      */
-    public function validateUser($app, $msg = ""){
+    public function validateUser($app, &$msg = ""){
         $userStatus = $this->status;
         $userType = $this->type;
         $inactives = EnumUser::statusInactive();
@@ -251,10 +252,10 @@ class User extends \common\models\table\User implements IdentityInterface
             $msg = $inactives[$userStatus];
             return false;
         }
-        if(in_array($app, EnumAPP::$backendAppList) &&in_array($userType,EnumUser::$backendTypeList)){
+        if(in_array($app, EnumAPP::$backendAppList) && in_array($userType,EnumUser::$backendTypeList)){
             return true;
         }
-        else if(in_array($app, EnumAPP::$frontendAppList) &&in_array($userType,EnumUser::$frontendTypeList)){
+        else if(in_array($app, EnumAPP::$frontendAppList) && in_array($userType,EnumUser::$frontendTypeList)){
             return true;
         }
         $msg =  Trans::tMsg('You do not have permission to sign in.');
