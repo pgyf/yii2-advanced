@@ -6,6 +6,7 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use common\models\form\LoginForm;
 use yii\filters\VerbFilter;
+use common\lib\widgets\CaptchaAction;
 use common\lib\enum\EnumAPP;
 
 /**
@@ -23,7 +24,7 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error'],
+                        'actions' => ['login', 'error','captcha'],
                         'allow' => true,
                     ],
                     [
@@ -50,6 +51,11 @@ class SiteController extends Controller
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
+            ],
+            'captcha' =>[
+                'class' => CaptchaAction::className(),
+                'height' => 42,
+                //'fixedVerifyCode' => YII_ENV_DEV ? '1111' : null,
             ],
         ];
     }

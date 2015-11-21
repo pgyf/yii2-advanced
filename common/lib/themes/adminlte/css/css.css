@@ -7,6 +7,120 @@ and open the template in the editor.
     Created on : 2015-11-8, 21:44:57
     Author     : WR
 */
-.login-page, .register-page {
+
+/*.login-page, .register-page {
    background: rgb(247, 247, 247);
+   background: #1582dc;
+}*/
+
+.bg-default {
+  background-color: #f9f9f9 !important;
+  color: #666666;
+}
+.bg-primary {
+  background-color: #4e8ef7 !important;
+  color: #fff !important;
+}
+.bg-success {
+  background-color: #68b828 !important;
+  color: #fff !important;
+}
+.bg-warning {
+  background-color: #ffba00 !important;
+  color: #fff !important;
+}
+.bg-info {
+  background-color: #40bbea !important;
+  color: #fff !important;
+}
+.bg-danger {
+  background-color: #f2233b !important;
+  color: #fff !important;
+}
+.bg-orange {
+  background-color: #f2561a !important;
+  color: #fff !important;
+}
+.bg-pink {
+  background-color: #de1771 !important;
+  color: #fff !important;
+}
+.bg-purple {
+  background-color: #552f80 !important;
+  color: #fff !important;
+}
+.bg-grey {
+  background-color: #5e5b5e !important;
+  color: #fff !important;
+}
+.bg-black {
+  background-color: #2c2a2e !important;
+  color: #fff !important;
+}
+.bg-white {
+  background-color: #ffffff !important;
+  color: #666666 !important;
+}
+.bg-transparent {
+  background-color: transparent !important;
+}
+.bg-overlay {
+  background-image: -webkit-linear-gradient(left, rgba(153, 93, 179, 0.6) 1%, rgba(44, 155, 219, 0.6)) !important;
+  background-image: linear-gradient(to right, rgba(153, 93, 179, 0.6) 1%, rgba(44, 155, 219, 0.6)) !important;
+  color: #FFFFFF;
+}
+
+
+.login-page{
+  height: 100%;
+  background-color: #f5f5f5;
+}
+.login-page .outer {
+  display: table;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+/*  background-image: url('../img/login/bg1.jpg');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;*/
+}
+.login-page .outer .middle {
+  display: table-cell;
+  vertical-align: middle;
+}
+.login-page .outer .middle .inner {
+  margin-left: auto;
+  margin-right: auto;
+  width: 350px;
+}
+.login-page .outer .middle .inner .header {
+  width: 100%;
+  display: block;
+  text-align: center;
+}
+.login-page .outer .middle .inner .header .logo {
+  font-family: 'Berkshire Swash';
+  font-size: 35px;
+  color: #FFFFFF;
+}
+.login-page .outer .middle .inner .login-form {
+  padding: 20px 30px;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+.login-page .outer .middle .inner .login-form .form-group input {
+  border-color: rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: rgba(255, 255, 255, 0.8);
+}
+.login-page .outer .middle .inner .login-form hr {
+  border-top-color: rgba(0, 0, 0, 0.35);
+}
+@media (max-width: 320px) {
+  .inner {
+    width: 280px !important;
+  }
+}
+.login-logo a, .register-logo a {
+   color: #FFFFFF;
 }

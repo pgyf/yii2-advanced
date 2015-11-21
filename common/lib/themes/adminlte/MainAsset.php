@@ -19,7 +19,8 @@ class MainAsset extends \yii\web\AssetBundle{
 //    public $js = [
 //    ];
     public $depends = [
-        'dmstr\web\AdminLteAsset',
+        'common\lib\themes\adminlte\AdminLteAsset',
+        'common\lib\assets\bower\AwesomeCheckboxAsset',
     ];
     
 }
