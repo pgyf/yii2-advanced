@@ -10,17 +10,17 @@ namespace backend\lib\extensions\mdmsoft\admin;
  */
 class Module extends \mdm\admin\Module{
     
-    /**
-     * @var string the root directory that contains view files for this module
-     */
-    private $_viewPath;
-
-    public function getViewPath() {
-        if ($this->_viewPath !== null) {
-            return $this->_viewPath;
-        } else {
-            return $this->_viewPath = $this->getBasePath() . DIRECTORY_SEPARATOR . 'views';
-        }
-    }
+//    /**
+//     * @var string the root directory that contains view files for this module
+//     */
+//    private $_viewPath;
+//
+//    public function getViewPath() {
+//        if ($this->_viewPath !== null) {
+//            return $this->_viewPath;
+//        } else {
+//            return $this->_viewPath = $this->getBasePath() . DIRECTORY_SEPARATOR . 'views';
+//        }
+//    }
     
 }

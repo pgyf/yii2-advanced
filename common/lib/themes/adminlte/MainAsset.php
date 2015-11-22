@@ -11,7 +11,7 @@ namespace common\lib\themes\adminlte;
  */
 class MainAsset extends \yii\web\AssetBundle{
 
-    public $sourcePath = '@common/lib/themes/adminlte';
+    public $sourcePath = '@common/lib/themes/adminlte/asset';
     
     public $css = [
         'css/css.css',

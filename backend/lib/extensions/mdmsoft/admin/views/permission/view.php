@@ -10,6 +10,7 @@ use yii\helpers\Url;
 /* @var $model mdm\admin\models\AuthItem */
 
 $this->title = $model->name;
+$this->params['navActive'] = '/admin/assignment';
 $this->params['breadcrumbs'][] = ['label' => Yii::t('rbac-admin', 'Permissions'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

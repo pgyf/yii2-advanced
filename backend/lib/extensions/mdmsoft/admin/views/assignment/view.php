@@ -16,7 +16,8 @@ if (!empty($fullnameField)) {
 }
 $userName = Html::encode($userName);
 
-$this->title = Yii::t('rbac-admin', 'Assignments') . ' : ' . $userName;;
+$this->title = Yii::t('rbac-admin', 'Assignments') . ' : ' . $userName;
+$this->params['navActive'] = '/admin/assignment';
 $this->params['breadcrumbs'][] = ['label' => Yii::t('rbac-admin', 'Assignments'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $userName;
 ?>

@@ -34,9 +34,9 @@ $fieldOptions3 = [
         
         
 <div class="login-box">
-    <div class="login-logo">
-        <a href="#"><b><?php echo Trans::t('App name');?></b></a>
-    </div>
+<!--    <div class="login-logo">
+        <a href="#"><b><?= Trans::t('App name');?></b></a>
+    </div>-->
     <!-- /.login-logo -->
     <div class="login-box-body">
         <p class="login-box-msg"></p>

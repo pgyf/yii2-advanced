@@ -7,6 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model mdm\admin\models\Menu */
 
 $this->title = $model->name;
+$this->params['navActive'] = '/admin/assignment';
 $this->params['breadcrumbs'][] = ['label' => Yii::t('rbac-admin', 'Menus'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -30,8 +31,14 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'menuParent.name:text:Parent',
             'name',
+            'label',
+            ['attribute'=>'icon', 
+              'format'=>'raw', 
+              'value'=> '<span class="fa fa-'.$model->icon.'"></span>',
+            ],
             'route',
             'order',
+            'description',
         ],
     ]) ?>
 

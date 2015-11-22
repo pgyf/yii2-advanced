@@ -11,6 +11,7 @@ use yii\widgets\Pjax;
 /* @var $extraColumns string[] */
 
 $this->title = Yii::t('rbac-admin', 'Assignments');
+$this->params['navActive'] = '/admin/assignment';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="assignment-index">

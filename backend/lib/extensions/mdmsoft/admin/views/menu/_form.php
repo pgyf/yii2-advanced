@@ -5,6 +5,8 @@ use yii\widgets\ActiveForm;
 use mdm\admin\models\Menu;
 use yii\helpers\Json;
 use mdm\admin\AutocompleteAsset;
+use common\lib\widgets\Iconpicker;
+use common\messages\Trans;
 
 /* @var $this yii\web\View */
 /* @var $model mdm\admin\models\Menu */
@@ -18,6 +20,17 @@ use mdm\admin\AutocompleteAsset;
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => 128]) ?>
 
+    <?= $form->field($model, 'label')->textInput(['maxlength' => 256]) ?>
+    
+    <?= $form->field($model, 'icon')->widget(Iconpicker::className(),[
+        'rows'=> 6,
+        'columns'=> 8,
+        'removePrefix' => true,
+        'pickerOptions' => ['data-search-text' => Trans::tLabel('Search Icon'),],
+     ]); ?>
+    
+    <?= $form->field($model, 'description')->textInput(['maxlength' => 128]) ?>
+    
     <?= $form->field($model, 'parent_name')->textInput(['id'=>'parent_name']) ?>
 
     <?= $form->field($model, 'route')->textInput(['id'=>'route']) ?>

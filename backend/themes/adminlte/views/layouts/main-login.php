@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use common\lib\themes\adminlte\MainAsset;
 use common\messages\Trans;
+use yii\bootstrap\Nav;
+use yii\bootstrap\NavBar;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -23,6 +25,43 @@ MainAsset::register($this);
 </head>
 <body class="login-page">
 
+    <?php
+    NavBar::begin([
+        'brandLabel' => Trans::t('App name'),
+        'brandUrl' => Yii::$app->homeUrl,
+        'options' => [
+            'class' => 'navbar-inverse navbar-fixed-top',
+        ],
+    ]);
+    $menuItems = [
+        ['label' => 'Home', 'url' => ['/site/index']],
+    ];
+    if (Yii::$app->user->isGuest) {
+        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+    } else {
+        $menuItems[] = [
+            'label' => 'Logout (' . Yii::$app->user->identity->username . ')',
+            'url' => ['/site/logout'],
+            'linkOptions' => ['data-method' => 'post']
+        ];
+    }
+    $menuItems[] = \common\messages\Trans::getLanguageNames();
+    echo Nav::widget([
+        'options' => ['class' => 'navbar-nav navbar-right'],
+        'encodeLabels' => false,
+        'items' => $menuItems,
+    ]);
+    
+//    echo \common\lib\widgets\LanguagePicker::widget([
+//        'isAutoLabel' => true,
+//        'skin' => \common\lib\widgets\LanguagePicker::SKIN_DROPDOWN,
+//        'size' => \common\lib\widgets\LanguagePicker::SIZE_LARGE
+//    ]);
+    
+    NavBar::end();
+    ?>
+    
+    
 <?php $this->beginBody() ?>
 
     <?= $content ?>

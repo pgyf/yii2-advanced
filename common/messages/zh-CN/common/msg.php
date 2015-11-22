@@ -18,6 +18,7 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
+    'Click replace verification code' => '点击更换验证码',
     'Please compress the size of the image,click on the display of the compressed address.' => '请压缩图像的大小，点击显示压缩地址。', 
     '{attribute} error.' => '{attribute}错误。',
     'Incorrect username or password.' => '账号或密码错误。',

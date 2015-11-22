@@ -19,7 +19,15 @@ return [
     ],
     'modules' => [
         'admin' => [
-            'class' => 'mdm\admin\Module',
+            'class' => 'backend\lib\extensions\mdmsoft\admin\Module',//'mdm\admin\Module', 'backend\lib\extensions\mdmsoft\admin\Module',
+            'controllerNamespace' => 'mdm\admin\controllers',
+            'controllerMap' => [
+            'menu' => [
+                    'class' => 'backend\lib\extensions\mdmsoft\admin\controllers\MenuController',
+                ]
+            ],
+            'layout' => 'left-menu',
+            'mainLayout' => '@app/views/layouts/main.php'
         ]
     ],
     'components' => [
@@ -81,7 +89,7 @@ return [
         ],
     ],
     'as access' => [
-        'class' => 'mdm\admin\components\AccessControl',
+        'class' => 'backend\lib\extensions\mdmsoft\admin\components\AccessControl', //mdm\admin\components\AccessControl
         'allowActions' => [
             'site/*',
             'admin/*', //生产环境应该移除

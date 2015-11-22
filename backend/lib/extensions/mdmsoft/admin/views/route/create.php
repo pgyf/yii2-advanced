@@ -10,6 +10,7 @@ use yii\widgets\ActiveForm;
  */
 
 $this->title = Yii::t('rbac-admin', 'Create Route');
+$this->params['navActive'] = '/admin/assignment';
 $this->params['breadcrumbs'][] = ['label' => Yii::t('rbac-admin', 'Routes'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

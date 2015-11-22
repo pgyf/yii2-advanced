@@ -6,6 +6,7 @@ use yii\helpers\Html;
 /* @var $model mdm\admin\models\Menu */
 
 $this->title = Yii::t('rbac-admin', 'Create Menu');
+$this->params['navActive'] = '/admin/assignment';
 $this->params['breadcrumbs'][] = ['label' => Yii::t('rbac-admin', 'Menus'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

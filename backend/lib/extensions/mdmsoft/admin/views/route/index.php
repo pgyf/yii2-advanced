@@ -9,6 +9,7 @@ use yii\helpers\Url;
  * @var yii\web\View $this
  */
 $this->title = Yii::t('rbac-admin', 'Routes');
+$this->params['navActive'] = '/admin/assignment';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <h1><?= Html::encode($this->title) ?></h1>

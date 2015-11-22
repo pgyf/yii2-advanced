@@ -8,6 +8,7 @@ use yii\helpers\Html;
  */
 
 $this->title = Yii::t('rbac-admin', 'Create Rule');
+$this->params['navActive'] = '/admin/assignment';
 $this->params['breadcrumbs'][] = ['label' => Yii::t('rbac-admin', 'Rules'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

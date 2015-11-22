@@ -9,6 +9,7 @@ use yii\helpers\ArrayHelper;
  */
 
 $this->title = Yii::t('rbac-admin', 'Generate Routes');
+$this->params['navActive'] = '/admin/assignment';
 $this->params['breadcrumbs'][] = ['label' => Yii::t('rbac-admin', 'Routes'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

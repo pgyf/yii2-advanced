@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ef94c4ebfe6f6e8f013bcf9892c35e63",
-    "content-hash": "4e1398ea404feb567506237b22d74904",
+    "hash": "6232bf2faf02ecc37ec8044b17c3b482",
+    "content-hash": "d446228a4a4bce3c2c85d8784597176c",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -157,6 +157,42 @@
                 "dropdowns",
                 "hover",
                 "twitter"
+            ]
+        },
+        {
+            "name": "bower-asset/bootstrap-iconpicker",
+            "version": "v1.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/victor-valencia/bootstrap-iconpicker.git",
+                "reference": "f5ae2d39f2545531e8e4e3d5f82707b9f45752a1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/victor-valencia/bootstrap-iconpicker/zipball/f5ae2d39f2545531e8e4e3d5f82707b9f45752a1",
+                "reference": "f5ae2d39f2545531e8e4e3d5f82707b9f45752a1",
+                "shasum": ""
+            },
+            "type": "bower-asset-library",
+            "extra": {
+                "bower-asset-main": "bootstrap-iconpicker/"
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Simple Iconpicker for Bootstrap 3.x",
+            "keywords": [
+                "Bootstrap",
+                "Elusive Icons",
+                "Font Awesome",
+                "Glyphicon",
+                "Iconpicker",
+                "Ionicons",
+                "Map Icons",
+                "Material Design Icons",
+                "Octicons",
+                "Typicons",
+                "Weather Icons"
             ]
         },
         {

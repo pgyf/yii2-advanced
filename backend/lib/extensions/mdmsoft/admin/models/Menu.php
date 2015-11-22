@@ -1,9 +1,8 @@
 <?php
 
-namespace mdm\admin\models;
+namespace backend\lib\extensions\mdmsoft\admin\models;
 
 use Yii;
-use mdm\admin\components\Configs;
 
 /**
  * This is the model class for table "menu".
@@ -21,29 +20,8 @@ use mdm\admin\components\Configs;
  * @author Misbahul D Munir <misbahuldmunir@gmail.com>
  * @since 1.0
  */
-class Menu extends \yii\db\ActiveRecord
+class Menu extends \mdm\admin\models\Menu
 {
-    public $parent_name;
-
-    /**
-     * @inheritdoc
-     */
-    public static function tableName()
-    {
-        return Configs::instance()->menuTable;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public static function getDb()
-    {
-        if (Configs::instance()->db !== null) {
-            return Configs::instance()->db;
-        } else {
-            return parent::getDb();
-        }
-    }
 
     /**
      * @inheritdoc
@@ -51,40 +29,20 @@ class Menu extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name'], 'required'],
+            [['label','icon'],'safe'],
+            [['name','description'], 'required'],
             [['parent_name'], 'filterParent'],
             [['parent_name'], 'in',
                 'range' => static::find()->select(['name'])->column(),
                 'message' => 'Menu "{value}" not found.'],
             [['parent', 'route', 'data', 'order'], 'default'],
             [['order'], 'integer'],
-            [['route'], 'in',
-                'range' => static::getSavedRoutes(),
-                'message' => 'Route "{value}" not found.']
+//            [['route'], 'in',
+//                'range' => static::getSavedRoutes(),
+//                'message' => 'Route "{value}" not found.']
         ];
     }
 
-    /**
-     * Use to loop detected.
-     */
-    public function filterParent()
-    {
-        $value = $this->parent_name;
-        $parent = self::findOne(['name' => $value]);
-        if ($parent) {
-            $id = $this->id;
-            $parent_id = $parent->id;
-            while ($parent) {
-                if ($parent->id == $id) {
-                    $this->addError('parent_name', 'Loop detected.');
-
-                    return;
-                }
-                $parent = $parent->menuParent;
-            }
-            $this->parent = $parent_id;
-        }
-    }
 
     /**
      * @inheritdoc
@@ -99,40 +57,10 @@ class Menu extends \yii\db\ActiveRecord
             'route' => Yii::t('rbac-admin', 'Route'),
             'order' => Yii::t('rbac-admin', 'Order'),
             'data' => Yii::t('rbac-admin', 'Data'),
+            'label' => Yii::t('rbac-admin', 'Label'),
+            'icon' => Yii::t('rbac-admin', 'Icon'),
+            'description' => Yii::t('rbac-admin', 'Description'),
         ];
     }
 
-    /**
-     * Get menu parent
-     * @return \yii\db\ActiveQuery
-     */
-    public function getMenuParent()
-    {
-        return $this->hasOne(Menu::className(), ['id' => 'parent']);
-    }
-
-    /**
-     * Get menu children
-     * @return \yii\db\ActiveQuery
-     */
-    public function getMenus()
-    {
-        return $this->hasMany(Menu::className(), ['parent' => 'id']);
-    }
-
-    /**
-     * Get saved routes.
-     * @return array
-     */
-    public static function getSavedRoutes()
-    {
-        $result = [];
-        foreach (Yii::$app->getAuthManager()->getPermissions() as $name => $value) {
-            if ($name[0] === '/' && substr($name, -1) != '*') {
-                $result[] = $name;
-            }
-        }
-
-        return $result;
-    }
 }

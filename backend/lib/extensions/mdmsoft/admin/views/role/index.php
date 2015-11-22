@@ -10,6 +10,7 @@ use yii\widgets\Pjax;
  * @var mdm\admin\models\AuthItemSearch $searchModel
  */
 $this->title = Yii::t('rbac-admin', 'Roles');
+$this->params['navActive'] = '/admin/assignment';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="role-index">

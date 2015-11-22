@@ -59,6 +59,9 @@ class Trans{
         return  static::tCategory('title', $message, $params, $language);
     }
     
+    
+    
+    
     /**
      * 语言 
      * 参考 https://github.com/lajax/yii2-translate-manager/blob/master/migrations/m141002_030233_translate_manager.php

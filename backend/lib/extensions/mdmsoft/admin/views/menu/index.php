@@ -9,6 +9,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel mdm\admin\models\searchs\Menu */
 
 $this->title = Yii::t('rbac-admin', 'Menus');
+$this->params['navActive'] = '/admin/assignment';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="menu-index">
