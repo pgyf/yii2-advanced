@@ -10,6 +10,21 @@ namespace common\lib\base;
  */
 class ActiveQuery extends \yii\db\ActiveQuery{
 
+    public $tableNickname;
+
+    public function asTableName($asName = 't'){
+        $this->tableNickname = $asName;
+    }
+
+
+    public function asFieldName($field){
+        if($this->tableNickname){
+            return $this->tableNickname.'.'.$field;
+        }
+        return $field;
+    }
+    
+
     /**
      * 增加like条件
      * @param array $likeCondition

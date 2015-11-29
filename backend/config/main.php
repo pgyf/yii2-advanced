@@ -22,6 +22,11 @@ return [
             'class' => 'backend\lib\extensions\mdmsoft\admin\Module',//'mdm\admin\Module', 'backend\lib\extensions\mdmsoft\admin\Module',
             'controllerNamespace' => 'mdm\admin\controllers',
             'controllerMap' => [
+                'assignment' => [
+                    'class' => 'mdm\admin\controllers\AssignmentController',
+                    /* 'userClassName' => 'app\models\User', */
+                    'searchClass' => 'backend\lib\extensions\mdmsoft\admin\models\search\UserSearch'
+            ],
             'menu' => [
                     'class' => 'backend\lib\extensions\mdmsoft\admin\controllers\MenuController',
                 ]

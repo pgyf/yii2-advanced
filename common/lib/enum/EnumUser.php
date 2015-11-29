@@ -51,7 +51,6 @@ class EnumUser extends EnumBase{
      * @var type 
      */
     public static $backendTypeList = [
-        self::TYPE_ADMIN,
         self::TYPE_MANAGER,
         self::TYPE_BACKEND_USER,
     ];
