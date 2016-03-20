@@ -230,13 +230,13 @@ use common\messages\Trans;
 
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="user-image" alt="User Image"/>
+                        <img src="<?= $directoryAsset ?>/img/avatar.png" class="user-image" alt="User Image"/>
                         <span class="hidden-xs">Alexander Pierce</span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-                            <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="img-circle"
+                            <img src="<?= $directoryAsset ?>/img/avatar.png" class="img-circle"
                                  alt="User Image"/>
 
                             <p>
@@ -245,7 +245,7 @@ use common\messages\Trans;
                             </p>
                         </li>
                         <!-- Menu Body -->
-                        <li class="user-body">
+<!--                        <li class="user-body">
                             <div class="col-xs-4 text-center">
                                 <a href="#">Followers</a>
                             </div>
@@ -255,15 +255,15 @@ use common\messages\Trans;
                             <div class="col-xs-4 text-center">
                                 <a href="#">Friends</a>
                             </div>
-                        </li>
+                        </li>-->
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                <a href="#" class="btn btn-default btn-flat"><i class="fa fa-user"></i> <?= Trans::tLabel('Profile')?></a>
                             </div>
                             <div class="pull-right">
                                 <?= Html::a(
-                                    'Sign out',
+                                    '<i class="fa fa-power-off"></i> '.Trans::t('Sign out'),
                                     ['/site/logout'],
                                     ['data-method' => 'post', 'class' => 'btn btn-default btn-flat']
                                 ) ?>
@@ -273,9 +273,9 @@ use common\messages\Trans;
                 </li>
 
                 <!-- User Account: style can be found in dropdown.less -->
-                <li>
+<!--                <li>
                     <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-                </li>
+                </li>-->
             </ul>
         </div>
     </nav>

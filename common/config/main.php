@@ -16,6 +16,11 @@ return [
 //            'schemaCache' => 'cache',
 //            'queryCache' => 'cache',
 //        ],
+        'assetManager' => [
+            'class' => 'yii\web\AssetManager',
+            'linkAssets' => true,
+            'appendTimestamp' => YII_ENV_DEV,
+        ],
         'cache' => function(){
             return Yii::$app->fileCache;
         },

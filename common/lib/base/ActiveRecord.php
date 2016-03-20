@@ -3,7 +3,7 @@
 namespace common\lib\base;
 
 use Yii;
-
+use common\lib\helpers\App;
 
 /**
  * ActiveRecord
@@ -30,48 +30,10 @@ class ActiveRecord extends \yii\db\ActiveRecord
      * @return boolean
      */
     public function validateReapet($data = null, $formName = null) {
-        $tokenParam = "pageToken";
-        $tokenSaveParam = "reapetToken";
-        $useCookie = true;
-        $token = null;
-        $request = Yii::$app->getRequest();
-        if(Yii::$app->controller->enableCsrfValidation){
-            $token = $request->getBodyParam($request->csrfParam);
-            if(!$token){
-                $token = $request->getCsrfTokenFromHeader();
-            } 
+        if(App::validateReapet()){
+            return  $this->load($data, $formName);
         }
-        else{
-            $token =  $request->post($tokenParam);
-            if(!$token){
-                $token =  $request->get($tokenParam);
-            }
-        }
-        if($token){
-            $token = Html::encode($token);
-        }
-        if($useCookie){
-            $saveToken = $request->cookies->getValue($tokenSaveParam);
-        }
-        else{
-            $saveToken = Yii::$app->getSession()->get($tokenSaveParam);
-        }
-        if(null === $token){
-            return $this->load($data, $tokenSaveParam);
-        }
-        if($token == $saveToken){
-            return false;
-        }
-        if($useCookie){
-            $request->cookies->add(new Cookie([
-                'name' => $tokenSaveParam,
-                'value' => $token,
-            ]));
-        }
-        else{
-            Yii::$app->getSession()->set($tokenSaveParam, $token);
-        }
-        return  $this->load($data, $tokenSaveParam);
+        return false;
     }
 
 

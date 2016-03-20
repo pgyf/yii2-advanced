@@ -5,6 +5,8 @@ use common\lib\widgets\AwesomeCheckbox;
 use common\messages\Trans;
 use common\lib\helpers\App;
 use yii\captcha\Captcha;
+use yii\helpers\Json;
+use yii\web\View;
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
@@ -14,12 +16,12 @@ $this->title =  Trans::t('Sign in');
 
 $fieldOptions1 = [
     'options' => ['class' => 'form-group has-feedback'],
-    'inputTemplate' => "{input}<span class='glyphicon glyphicon-envelope form-control-feedback'></span>"
+    'inputTemplate' => "{input}<span class='fa fa-user form-control-feedback'></span>"
 ];
 
 $fieldOptions2 = [
     'options' => ['class' => 'form-group has-feedback'],
-    'inputTemplate' => "{input}<span class='glyphicon glyphicon-lock form-control-feedback'></span>"
+    'inputTemplate' => "{input}<span class='fa fa-key form-control-feedback'></span>"
 ];
 
 $fieldOptions3 = [
@@ -66,7 +68,7 @@ $fieldOptions3 = [
             ?>
         
         <div class="row">
-            <div class="col-xs-8">
+            <div class="col-xs-6">
                 <?= $form->field($model, 'rememberMe')->widget(AwesomeCheckbox::classname(),[
                     'type'=>AwesomeCheckbox::TYPE_CHECKBOX, //optional string default type TYPE_CHECKBOX
                     'style'=>[
@@ -75,8 +77,12 @@ $fieldOptions3 = [
                 ])->label(false) ?>
             </div>
             <!-- /.col -->
-            <div class="col-xs-4">
-                <?= Html::submitButton(Trans::t('Sign in'), ['class' => 'btn btn-primary btn-block btn-flat', 'name' => 'login-button']) ?>
+            <div class="col-xs-6">
+                <div class="form-group">
+                <?= Html::submitButton(Trans::t('Sign in'), ['class' => 'btn btn-primary btn-block btn-flat', 'name' => 'login-button','data' => [
+                    'loading-text' => '<i class="fa fa-spinner fa-spin"></i> '.Trans::tLabel('Sign in...'),  
+                ]]) ?>
+                </div>
             </div>
             <!-- /.col -->
         </div>
@@ -93,3 +99,12 @@ $fieldOptions3 = [
 
    </div>
 </div>
+
+<?php $this->beginBlock('js_end') ?>
+    $('#<?= $form->id ?>').on('beforeSubmit', function(evt, messages, attribute) {
+       var  submitBtn = $(':submit');
+       submitBtn.button('loading');
+       //submitBtn.text('登录中').prop('disabled', true);
+   });
+<?php $this->endBlock(); ?>
+<?php $this->registerJs($this->blocks['js_end'],View::POS_READY) ?>

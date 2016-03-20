@@ -1,3 +1,7 @@
+# Env
+/.env
+/vhost.conf
+
 # yii console command
 /yii
 

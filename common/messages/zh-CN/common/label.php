@@ -20,4 +20,6 @@
 return [
     'Remember Me' => '记住我',
     'Verification Code' => '验证码',
+    'Sign in...' => '登录中...',
+    'Profile' => '个人资料',
 ];

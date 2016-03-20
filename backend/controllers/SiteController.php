@@ -8,6 +8,7 @@ use common\models\form\LoginForm;
 use yii\filters\VerbFilter;
 use common\lib\widgets\CaptchaAction;
 use common\lib\enum\EnumAPP;
+use common\lib\helpers\App;
 
 /**
  * Site controller
@@ -72,7 +73,7 @@ class SiteController extends Controller
         }
 
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login(EnumAPP::APP_WEB_ADMIN)) {
+        if (App::validateReapet() && $model->load(Yii::$app->request->post()) && $model->login(EnumAPP::APP_WEB_ADMIN)) {
             return $this->goBack();
         } else {
 //            \yii\helpers\VarDumper::dump($model->getErrors(), 10, true);

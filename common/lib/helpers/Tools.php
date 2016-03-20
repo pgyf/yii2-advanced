@@ -9,6 +9,46 @@ namespace common\lib\helpers;
  * @date       2015-10-31
  */
 class Tools {
+	
+    /**
+     * Gets the user's IP address
+     *
+     * @param boolean $filterLocal whether to filter local & LAN IP (defaults to true)
+     *
+     * @return string
+     */
+    private static function userIP($filterLocal = true)
+    {
+        $ipSources = [
+            'HTTP_CLIENT_IP',
+            'HTTP_X_FORWARDED_FOR',
+            'HTTP_X_FORWARDED',
+            'HTTP_X_CLUSTER_CLIENT_IP',
+            'HTTP_FORWARDED_FOR',
+            'HTTP_FORWARDED',
+            'REMOTE_ADDR'
+        ];
+        foreach ($ipSources as $key) {
+            if (array_key_exists($key, $_SERVER) === true) {
+                foreach (array_map('trim', explode(',', $_SERVER[$key])) as $ip) {
+                    if ($filterLocal) {
+                        $checkFilter = filter_var(
+                            $ip,
+                            FILTER_VALIDATE_IP,
+                            FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE
+                        );
+                        if ($checkFilter !== false) {
+                            return $ip;
+                        }
+                    } else {
+                        return $ip;
+                    }
+                }
+            }
+        }
+        return 'Unknown';
+    }
+	
    /**
      * 获取客户端IP地址
      * @param integer $type 返回类型 0 返回IP地址 1 返回IPV4地址数字
@@ -37,8 +77,7 @@ class Tools {
 //        $long = sprintf("%u",ip2long($ip));
 //        $ip   = $long ? array($ip, $long) : array('0.0.0.0', 0);
 //        return $ip[$type];
-        $userIP =  \kartik\helpers\Enum::userIP(false);
-        //\kartik\helpers\Enum::userIP();
+        $userIP =  self::userIP(false);
         
         if('Unknown' == $userIP){
             return 0;

@@ -7,6 +7,7 @@ use yii\helpers\VarDumper;
 use yii\helpers\Html;
 use yii\helpers\HtmlPurifier;
 use yii\web\Cookie;
+use yii\helpers\ArrayHelper;
 
 class BaseApp
 {
@@ -61,6 +62,57 @@ class BaseApp
         return Html::hiddenInput($tokenParam, $token);
     }
    
+    /**
+     * 验证重复提交 
+     * @return boolean
+     */
+    public static function validateReapet($options = []) {
+        $tokenParam = ArrayHelper::getValue($options, 'tokenParam', 'pageToken');
+        $tokenSaveParam = ArrayHelper::getValue($options, 'tokenSaveParam', 'reapetToken');
+        $useCookie = ArrayHelper::getValue($options, 'useCookie', true);
+        $token = null;
+        $request = Yii::$app->getRequest();
+        //是否开启了csrf
+        if(Yii::$app->controller->enableCsrfValidation){
+            $token = $request->getBodyParam($request->csrfParam);
+            if(!$token){
+                $token = $request->getCsrfTokenFromHeader();
+            }
+        }
+        else{
+            $token = $request->post($tokenParam);
+            if(!$token){
+                $token =  $request->get($tokenParam);
+            }
+        }
+        if($token){
+            $token = Html::encode($token);
+        }
+        if($useCookie){
+            $saveToken = $request->cookies->getValue($tokenSaveParam);
+        }
+        else{
+            $saveToken = Yii::$app->getSession()->get($tokenSaveParam);
+        }
+//        if(null === $token){
+//            return true;
+//        }
+        if($token == $saveToken){
+            return false;
+        }
+        if($useCookie){
+            $cookies = Yii::$app->response->cookies;
+            $cookies->add(new Cookie([
+                'name' => $tokenSaveParam,
+                'value' => $token,
+            ]));
+        }
+        else{
+            Yii::$app->getSession()->set($tokenSaveParam, $token);
+        }
+        return  true;
+    }
+
    
 //    public static function dateFormat($time, $format = null){
 //        return Yii::$app->getFormatter()->asDate($time,$format);
