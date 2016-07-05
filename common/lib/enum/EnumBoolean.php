@@ -2,7 +2,7 @@
 
 namespace common\lib\enum;
 
-use common\messages\Trans;
+use Yii;
 /**
  * Description of BooleanEnum
  *
@@ -17,8 +17,8 @@ class EnumBoolean extends EnumBase{
     
     protected static function yesnoList(){
         return [
-            self::YESNO_YES => \Yii::t('yii','Yes'),
-            self::YESNO_NO => \Yii::t('yii','No'),
+            self::YESNO_YES => Yii::t('yii','Yes'),
+            self::YESNO_NO => Yii::t('yii','No'),
         ];
     }
     
@@ -28,8 +28,8 @@ class EnumBoolean extends EnumBase{
     const SUCCESS_FAIL = 0;
     protected static function successList(){
         return [
-            self::SUCCESS_SUCCESS => Trans::tEnum('Success'),
-            self::SUCCESS_FAIL => Trans::tEnum('Fail'),
+            self::SUCCESS_SUCCESS => Yii::t('enum','Success'),
+            self::SUCCESS_FAIL => Yii::t('enum','Fail'),
         ];
     }
 

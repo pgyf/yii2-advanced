@@ -2,7 +2,7 @@
 
 namespace common\lib\enum;
 
-use common\messages\Trans;
+use Yii;
 
 
 /**
@@ -38,10 +38,10 @@ class EnumUser extends EnumBase{
     
     protected static function typeList(){
         return [
-            self::TYPE_ADMIN => Trans::tEnum('Admin'),
-            self::TYPE_MANAGER => Trans::tEnum('Manager'),
-            self::TYPE_BACKEND_USER => Trans::tEnum('Backend User'),
-            self::TYPE_USER => Trans::tEnum('User'),
+            self::TYPE_ADMIN => Yii::t('enum','Admin'),
+            self::TYPE_MANAGER => Yii::t('enum','Manager'),
+            self::TYPE_BACKEND_USER => Yii::t('enum','Backend User'),
+            self::TYPE_USER => Yii::t('enum','User'),
        ];
     }
     
@@ -72,13 +72,13 @@ class EnumUser extends EnumBase{
     /**
      * 正常
      */
-    const STATUS_ACTIVE  = 0;
+    const STATUS_ACTIVE  = 10;
 
     protected static function statusList(){
-        return  array_merge(parent::statusList(),
+        return  array_merge(
         [
-            static::STATUS_ACTIVE => Trans::tEnum('Normal'),
-        ]);
+            static::STATUS_ACTIVE => Yii::t('enum','Normal'),
+        ],parent::statusList());
     }
     
     
@@ -96,8 +96,8 @@ class EnumUser extends EnumBase{
      */
     public static function statusInactive() {
         return [
-            static::STATUS_DELETED => Trans::tMsg('The user has been removed.'),
-            static::STATUS_DISABLED => Trans::tMsg('The user has been disabled.'),
+            static::STATUS_DELETED => Yii::t('enum','The user has been removed'),
+            static::STATUS_DISABLED => Yii::t('enum','The user has been disabled'),
         ];
     } 
     

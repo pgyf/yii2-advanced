@@ -2,7 +2,7 @@
 
 namespace common\lib\enum;
 
-use common\messages\Trans;
+use Yii;
 use Detection\MobileDetect;
 
 /**
@@ -19,20 +19,19 @@ class EnumAPP extends EnumBase{
     const APP = 'app';
     
     /**
-     * 电脑网站
+     * web网站
      */
     const APP_WEB = 'web';
     
     /**
-     * 手机移动网站
+     * 移动网站
      */
-    const APP_MWEB = 'mweb';
+    const APP_WEB_MOBILE = 'mobile';
     
     /**
      * 后台
      */
-    const APP_WEB_ADMIN = 'backend';
-    
+    const APP_WEB_ADMIN = 'admin';
     
     /**
      * 安卓
@@ -43,21 +42,18 @@ class EnumAPP extends EnumBase{
      */
     const APP_APPLE   = 'apple';
     /**
-     * 微信
+     * 未知
      */
-    const APP_WECHAT   = 'wechat';
-    
-    const APP_UNKNOWN = 'unknown';
+    const APP_UNKNOWN = '';
    
     protected static function appList(){
         return [
-            self::APP_WEB_ADMIN => Trans::tEnum('Admin Backend'),
-            self::APP_APPLE => Trans::tEnum('Apple'),
-            self::APP_ANDROID => Trans::tEnum('Android'),
-            self::APP_WECHAT => Trans::tEnum('Wechat'),
-            self::APP_WEB => Trans::tEnum('Web'),
-            self::APP_MWEB => Trans::tEnum('Mobile Web'),
-            self::APP_UNKNOWN => Trans::tEnum('Unknown'),
+            self::APP_WEB => Yii::t('enum','Web'),
+            self::APP_WEB_ADMIN => Yii::t('enum','Admin Backend'),
+            self::APP_WEB_MOBILE => Yii::t('enum','Mobile Web'),
+            self::APP_APPLE => Yii::t('enum','Apple'),
+            self::APP_ANDROID => Yii::t('enum','Android'),
+            self::APP_UNKNOWN => Yii::t('enum','Unknown'),
        ];
     }
     
@@ -74,11 +70,10 @@ class EnumAPP extends EnumBase{
      * @var type 
      */
     public static $frontendAppList = [
-            self::APP_APPLE ,
-            self::APP_ANDROID,
-            self::APP_WECHAT,
-            self::APP_WEB,
-            self::APP_MWEB,
+        self::APP_WEB,
+        self::APP_WEB_MOBILE,
+        self::APP_APPLE ,
+        self::APP_ANDROID,
     ];
     
     
@@ -89,7 +84,7 @@ class EnumAPP extends EnumBase{
     //*********************************    
         const DEVICE = 'device';
 
-        const DEVICE_UNKNOWN = 'unknown';
+        const DEVICE_UNKNOWN = '';
 
         /**
          * 安卓手机
@@ -117,12 +112,12 @@ class EnumAPP extends EnumBase{
         
         protected static function deviceList(){
             return [
-                self::DEVICE_APPLE => Trans::tEnum('Apple'),  
-                self::DEVICE_APPLE_TABLE => Trans::tEnum('Ipad'),  
-                self::DEVICE_ANDROID => Trans::tEnum('Android'),  
-                self::DEVICE_ANDROID_TABLE => Trans::tEnum('Android Tablet'),  
-                self::DEVICE_COMPUTER => Trans::tEnum('Computer'),  
-                self::DEVICE_UNKNOWN => Trans::tEnum('Unknown'), 
+                self::DEVICE_APPLE => Yii::t('enum','Apple'),  
+                self::DEVICE_APPLE_TABLE => Yii::t('enum','Ipad'),  
+                self::DEVICE_ANDROID => Yii::t('enum','Android'),  
+                self::DEVICE_ANDROID_TABLE => Yii::t('enum','Android Tablet'),  
+                self::DEVICE_COMPUTER => Yii::t('enum','Computer'),  
+                self::DEVICE_UNKNOWN => Yii::t('enum','Unknown'), 
             ];
         }
         /**

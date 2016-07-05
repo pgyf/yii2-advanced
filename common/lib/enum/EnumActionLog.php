@@ -1,7 +1,7 @@
 <?php
 namespace common\lib\enum;
 
-use common\messages\Trans;
+use Yii;
 
 /**
  * 日志表枚举
@@ -24,12 +24,12 @@ class EnumActionLog extends EnumBase{
     
     protected static function typeList() {
         return [
-            static::TYPE_CREATE => Trans::tEnum('Create'),
-            static::TYPE_DELETE => Trans::tEnum('Delete'),
-            static::TYPE_UPDATE => Trans::tEnum('Update'),
-            static::TYPE_QUERY => Trans::tEnum('Query'),
-            static::TYPE_INFO => Trans::tEnum('Info'),
-            static::TYPE_ERROR => Trans::tEnum('Error'),
+            static::TYPE_CREATE => Yii::t('enum','Create'),
+            static::TYPE_DELETE => Yii::t('enum','Delete'),
+            static::TYPE_UPDATE => Yii::t('enum','Update'),
+            static::TYPE_QUERY => Yii::t('enum','Query'),
+            static::TYPE_INFO => Yii::t('enum','Info'),
+            static::TYPE_ERROR => Yii::t('enum','Error'),
         ];
     }
 

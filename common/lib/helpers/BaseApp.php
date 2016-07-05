@@ -113,7 +113,19 @@ class BaseApp
         return  true;
     }
 
-   
+   /**
+    * 接收表单数据
+    * @param type $model
+    * @param type $formName
+    * @return boolean
+    */
+    public static function load(&$model,$formName = null) {
+        if(self::validateReapet()){
+            return $model->load(Yii::$app->request->post(),$formName);
+        }
+        return  false;
+    }
+    
 //    public static function dateFormat($time, $format = null){
 //        return Yii::$app->getFormatter()->asDate($time,$format);
 //    }

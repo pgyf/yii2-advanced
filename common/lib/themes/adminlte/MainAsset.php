@@ -20,7 +20,7 @@ class MainAsset extends \yii\web\AssetBundle{
 //    ];
     public $depends = [
         'common\lib\themes\adminlte\AdminLteAsset',
-        'common\lib\assets\bower\AwesomeCheckboxAsset',
+        'common\lib\assets\AwesomeCheckboxAsset',
     ];
     
 }

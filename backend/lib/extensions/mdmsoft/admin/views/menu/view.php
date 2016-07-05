@@ -7,7 +7,6 @@ use yii\widgets\DetailView;
 /* @var $model mdm\admin\models\Menu */
 
 $this->title = $model->name;
-$this->params['navActive'] = '/admin/assignment';
 $this->params['breadcrumbs'][] = ['label' => Yii::t('rbac-admin', 'Menus'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -17,29 +16,27 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a(Yii::t('rbac-admin', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('rbac-admin', 'Delete'), ['delete', 'id' => $model->id], [
+        <?=
+        Html::a(Yii::t('rbac-admin', 'Delete'), ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
                 'method' => 'post',
             ],
-        ]) ?>
+        ])
+        ?>
     </p>
 
-    <?= DetailView::widget([
+    <?=
+    DetailView::widget([
         'model' => $model,
         'attributes' => [
             'menuParent.name:text:Parent',
             'name',
-            'label',
-            ['attribute'=>'icon', 
-              'format'=>'raw', 
-              'value'=> '<span class="fa fa-'.$model->icon.'"></span>',
-            ],
             'route',
             'order',
-            'description',
         ],
-    ]) ?>
+    ])
+    ?>
 
 </div>

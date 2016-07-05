@@ -547,6 +547,9 @@ class Generator extends \yii\gii\Generator
         if ($this->isReservedKeyword($this->modelClass)) {
             $this->addError('modelClass', 'Class name cannot be a reserved PHP keyword.');
         }
+        if(!$this->modelClass){
+            $this->modelClass = $this->generateClassName($this->tableName);
+        }
         if ((empty($this->tableName) || substr_compare($this->tableName, '*', -1, 1)) && $this->modelClass == '') {
             $this->addError('modelClass', 'Model Class cannot be blank if table name does not end with asterisk.');
         }

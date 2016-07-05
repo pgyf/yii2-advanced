@@ -3,7 +3,7 @@
 namespace common\lib\widgets;
 
 use yii\helpers\Html;
-use common\lib\assets\bower\AwesomeCheckboxAsset;
+use common\lib\assets\AwesomeCheckboxAsset;
 
 /**
  * Description of AwesomeCheckbox

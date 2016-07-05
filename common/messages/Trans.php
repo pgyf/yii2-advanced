@@ -21,12 +21,12 @@ class Trans{
     
     public static function tCategory($category, $message, $params = [], $language = null)
     {
-        return Yii::t('common/'.$category, $message,$params , $language);
+        return Yii::t($category, $message,$params , $language);
     }
     
     public static function t($message, $params = [], $language = null)
     {
-        return  static::tCategory('app', $message, $params, $language);
+        return  static::tCategory('common', $message, $params, $language);
     }
     
     public static function tModel($category, $message, $params = [], $language = null)
@@ -43,22 +43,7 @@ class Trans{
     {
         return  static::tCategory('enum', $message, $params, $language);
     }
-    
-    public static function tLabel($message, $params = [], $language = null)
-    {
-        return  static::tCategory('label', $message, $params, $language);
-    }
-    
-    public static function tMsg($message, $params = [], $language = null)
-    {
-        return  static::tCategory('msg', $message, $params, $language);
-    }
-  
-    public static function tTitle($message, $params = [], $language = null)
-    {
-        return  static::tCategory('title', $message, $params, $language);
-    }
-    
+
     
     
     
@@ -70,22 +55,21 @@ class Trans{
     public static function getLanguageNames(){
         //注册asset
         $view = Yii::$app->controller->getView();
-        \common\lib\assets\bower\HoverDropdownAsset::register($view);
+        \common\lib\assets\HoverDropdownAsset::register($view);
         \common\lib\assets\languagepicker\FlagLargeAsset::register($view);
         //\common\lib\assets\languagepicker\LanguageLargeIconsAsset::register($view);
-        $languages = array_values(Yii::$app->urlManager->languages);
+        $languages = Yii::$app->urlManager->languages;
         $items = [];
         $itemParent = [];
-        foreach ($languages as $language) {
+        foreach ($languages as $language => $languageLabel) {
             $params = array_merge([''],Yii::$app->request->queryParams, ['language' => $language]);
-            $name = Yii::t('language', $language);
-            $label = '<i style="vertical-align: middle;" class="'.$language.'"></i>'.$name;
+            $label = '<i style="vertical-align: middle;" class="'.$language.'"></i>'.$languageLabel;
             $url = yii\helpers\Url::to($params);
-            if(Yii::$app->language == $language){
+            if(strtolower(Yii::$app->language) == strtolower($language)){
                 $itemParent = [
                     'label' => $label,
                     'linkOptions' => [
-                        'title' => $name,
+                        'title' => $languageLabel,
                         'data' => [
                             'hover' => "dropdown",
                             'delay' => 100,
@@ -99,7 +83,7 @@ class Trans{
                     'label' => $label,
                     'url' => $url,
                     'linkOptions' => [
-                        'title' => $name,
+                        'title' => $languageLabel,
                         //'data-method' => 'post'
                     ]
                 ];

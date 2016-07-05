@@ -5,14 +5,18 @@ namespace common\models;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
+use yii\behaviors\BlameableBehavior;
 use yii\web\IdentityInterface;
 use common\lib\enum\EnumUser;
 use common\lib\validators\PhoneValidator;
 use common\lib\enum\EnumAPP;
-use common\messages\Trans;
+use common\lib\helpers\Pattern;
 
 class User extends \common\models\table\User implements IdentityInterface
 {
+
+    const EVENT_AFTER_SIGNUP = 'afterSignup';
+    const EVENT_AFTER_LOGIN = 'afterLogin';
 
     /**
      * @inheritdoc
@@ -25,6 +29,11 @@ class User extends \common\models\table\User implements IdentityInterface
                 'createdAtAttribute' => 'create_time',
                 'updatedAtAttribute' => 'update_time',
             ],
+            [
+                'class' => BlameableBehavior::className(),
+                'createdByAttribute' => 'create_user',
+                'updatedByAttribute' => 'update_user',
+            ],
         ];
     }
 
@@ -35,17 +44,25 @@ class User extends \common\models\table\User implements IdentityInterface
     {
         return  array_merge(parent::rules(),
         [
-            ['username', 'string', 'min' => 2, 'on' => ['backend-create','backend-update']],
-            ['username', 'string', 'min' => 6, 'except' => ['backend-create','backend-update']],
-            //只含有汉字、数字、字母、下划线不能以下划线开头和结尾
-            ['username', 'match', 'pattern' => '/^(?!_)(?!.*?_$)[a-zA-Z0-9_\u4e00-\u9fa5]+$'],
+            ['username', 'filter', 'filter' => 'trim'],
+            ['username', 'required'],
+            ['username', 'match', 'pattern' => Pattern::$userName],
+            ['username', 'string', 'min' => 6, 'on' => ['create','update']],
+            ['username', 'unique', 'targetClass' => User::className(), 'filter' => function ($query) {
+                if (!$this->getModel()->isNewRecord) {
+                    $query->andWhere(['not', ['id'=>$this->getModel()->id]]);
+                }
+            }],
+//            ['username', 'string', 'min' => 2, 'on' => ['create','update']],
+//            ['username', 'string', 'min' => 6, 'except' => ['backend-create','backend-update']],
+
             ['mobile', PhoneValidator::className()],
             ['email', 'email'],
             ['password', 'string', 'min' => 6],
             ['type', 'default', 'value' => EnumUser::TYPE_USER, 'on' => 'register'],
             ['type', 'in', 'range' => EnumUser::$frontendTypeList, 'on' => 'register'],
-            ['type', 'default', 'value' => EnumUser::TYPE_BACKEND_USER, 'on' => ['backend-create','backend-update']],
-            ['type', 'in', 'range' => [EnumUser::TYPE_BACKEND_USER], 'on' => 'backend-create','backend-update'],
+            ['type', 'default', 'value' => EnumUser::TYPE_BACKEND_USER, 'on' => ['create','update']],
+            ['type', 'in', 'range' => [EnumUser::TYPE_BACKEND_USER], 'on' => 'create','update'],
             ['status', 'default', 'value' => EnumUser::STATUS_ACTIVE],
             ['status', 'in', 'range' => EnumUser::getAllValue(EnumUser::STATUS)],
         ]);
@@ -62,7 +79,15 @@ class User extends \common\models\table\User implements IdentityInterface
                     'type', 'username', 'mobile','email', 'password', 'auth_key' , 'create_form_url', 'create_aouth_app' , 
                     'create_app', 'create_device','create_time' ,'create_ip','status'
                 ],
-            'updatePwd' => 
+            'create' => [
+                    'type', 'username','password', 'auth_key' , 'create_form_url', 'create_aouth_app' , 
+                    'create_app', 'create_device', 'create_user', 'create_time' ,'create_ip','status'
+                ],
+            'update' => 
+                [
+                    'type','username', 'password','update_user','update_time' , 'update_ip',
+                ],
+            'update-pwd' => 
                 [
                     'password','update_user','update_time' , 'update_ip',
                 ],
@@ -78,14 +103,6 @@ class User extends \common\models\table\User implements IdentityInterface
                 [
                     'email','update_user','update_time' , 'update_ip',
                 ],
-            'backend-create' => [
-                    'type', 'username','password', 'auth_key' , 'create_form_url', 'create_aouth_app' , 
-                    'create_app', 'create_device', 'create_user', 'create_time' ,'create_ip','status'
-                ],
-            'backend-update' => 
-                [
-                    'type','username', 'password','update_user','update_time' , 'update_ip',
-                ]
         ];
     }
     
@@ -216,8 +233,9 @@ class User extends \common\models\table\User implements IdentityInterface
         //if (!$this->isNewRecord) {
             $identity = $event->identity;
             $identity->auth_key = Yii::$app->security->generateRandomString();
-            $identity->save(false,['auth_key']);
+//            $identity->save(false,['auth_key']);
         //}
+        Yii::$app->db->createCommand()->update('{{%user}}', ['auth_key' => $identity->auth_key],['id' => $identity->id])->execute();
     }
 
     /**
@@ -252,13 +270,18 @@ class User extends \common\models\table\User implements IdentityInterface
             $msg = $inactives[$userStatus];
             return false;
         }
-        if(in_array($app, EnumAPP::$backendAppList) && in_array($userType,EnumUser::$backendTypeList)){
-            return true;
+        if(in_array($app, EnumAPP::$backendAppList)){
+            if(in_array($userType,EnumUser::$backendTypeList)){
+                return true;
+            }
+            else if($userType == EnumUser::TYPE_ADMIN){
+                return true;
+            }
         }
         else if(in_array($app, EnumAPP::$frontendAppList) && in_array($userType,EnumUser::$frontendTypeList)){
             return true;
         }
-        $msg =  Trans::tMsg('You do not have permission to sign in.');
+        $msg =  Yii::t('You do not have permission to sign in');
         return false;
     }
     
@@ -275,6 +298,40 @@ class User extends \common\models\table\User implements IdentityInterface
             return true;
         }
         return false;
+    }
+    
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserProfile()
+    {
+        return $this->hasOne(UserProfile::className(), ['user_id' => 'id']);
+    }
+    
+    /**
+     * Creates user profile and application event
+     * @param array $profileData
+     */
+    public function afterSignup(array $profileData = [])
+    {
+//        $this->refresh();
+//        Yii::$app->commandBus->handle(new AddToTimelineCommand([
+//            'category' => 'user',
+//            'event' => 'signup',
+//            'data' => [
+//                'public_identity' => $this->getPublicIdentity(),
+//                'user_id' => $this->getId(),
+//                'created_at' => $this->created_at
+//            ]
+//        ]));
+//        $profile = new UserProfile();
+//        $profile->locale = Yii::$app->language;
+//        $profile->load($profileData, '');
+//        $this->link('userProfile', $profile);
+//        $this->trigger(self::EVENT_AFTER_SIGNUP);
+//        // Default role
+//        $auth = Yii::$app->authManager;
+//        $auth->assign($auth->getRole(User::ROLE_USER), $this->getId());
     }
     
 }

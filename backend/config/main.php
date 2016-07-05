@@ -18,21 +18,39 @@ return [
         'backend\lib\components\AppBootstrap',
     ],
     'modules' => [
-        'admin' => [
-            'class' => 'backend\lib\extensions\mdmsoft\admin\Module',//'mdm\admin\Module', 'backend\lib\extensions\mdmsoft\admin\Module',
-            'controllerNamespace' => 'mdm\admin\controllers',
-            'controllerMap' => [
-                'assignment' => [
-                    'class' => 'mdm\admin\controllers\AssignmentController',
-                    /* 'userClassName' => 'app\models\User', */
-                    'searchClass' => 'backend\lib\extensions\mdmsoft\admin\models\search\UserSearch'
+    'admin' => [
+        'class' => 'mdm\admin\Module',
+        'layout' => 'left-menu', // default to null mean use application layout.
+        'mainLayout' => '@app/views/layouts/main.php',
+        'controllerMap' => [
+           'assignment' => [
+                'class' => 'mdm\admin\controllers\AssignmentController',
+                'userClassName' => 'common\models\User',
+                'searchClass' => 'backend\lib\extensions\mdmsoft\admin\models\search\UserSearch',
+                'idField' => 'id'
             ],
-            'menu' => [
-                    'class' => 'backend\lib\extensions\mdmsoft\admin\controllers\MenuController',
-                ]
-            ],
-            'layout' => 'left-menu',
-            'mainLayout' => '@app/views/layouts/main.php'
+        ],
+        'menus' => [
+//                'assignment' => [
+//                    'label' => 'Grand Access' // change label
+//                ],
+//                'route' => null, // disable menu
+              'user' => null,
+        ],
+//            'class' => 'backend\lib\extensions\mdmsoft\admin\Module',//'mdm\admin\Module', 'backend\lib\extensions\mdmsoft\admin\Module',
+//            'controllerNamespace' => 'mdm\admin\controllers',
+//            'controllerMap' => [
+//                'assignment' => [
+//                    'class' => 'mdm\admin\controllers\AssignmentController',
+//                    /* 'userClassName' => 'app\models\User', */
+//                    'searchClass' => 'backend\lib\extensions\mdmsoft\admin\models\search\UserSearch'
+//            ],
+//            'menu' => [
+//                    'class' => 'backend\lib\extensions\mdmsoft\admin\controllers\MenuController',
+//                ]
+//            ],
+//            'layout' => 'left-menu',
+//            'mainLayout' => '@app/views/layouts/main.php'
         ]
     ],
     'components' => [
@@ -42,66 +60,52 @@ return [
             'enableAutoLogin' => true,
             'loginUrl' => [0 => '/site/login'],
         ],
-        'authManager' => [
-            'class' => 'yii\rbac\DbManager', // or use 'yii\rbac\PhpManager'
-            'defaultRoles' => ['?'],
-            'cache' => 'cache',   // this enables RBAC caching
-        ],
-        'errorHandler' => [
-            'errorAction' => '/site/error',
-        ],
-        'urlManager' => [
-            'class' => 'common\lib\components\UrlManager', //'yii\web\urlManager',
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            //'enableDefaultLanguageUrlCode' => true,
-            'languages' => ['cn' => 'zh-CN','en' => 'en-US'],
-            'ruleConfig' => [
-                'class' => 'yii\web\UrlRule', //'common\lib\components\LanguageUrlRule'
-                'encodeParams' => false,
-            ],
-            'rules' => [
-                '<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
-                '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
-            ]
-        ],
-        'view' => [
-            'class' => '\rmrevin\yii\minify\View',
-            'enableMinify' => !YII_DEBUG,
-            'web_path' => '@web', // path alias to web base
-            'base_path' => '@webroot', // path alias to web base
-            'minify_path' => '@webroot/minify', // path alias to save minify result
-            'js_position' => [ \yii\web\View::POS_END ], // positions of js files to be minified
-            'force_charset' => 'UTF-8', // charset forcibly assign, otherwise will use all of the files found charset
-            'expand_imports' => !YII_DEBUG, // whether to change @import on content
-            'compress_output' => !YII_DEBUG, // compress result html page
-            'theme' => [
-                   'class'=>'common\lib\components\Theme',
-                   'active'=>'adminlte',
-                   'pathMap' => [ 
-                        'adminlte' => [
-                           '@app/views' => ['@app/themes/adminlte/views']
-                        ],
+    'authManager' => [
+        'class' => 'yii\rbac\DbManager', // or use 'yii\rbac\PhpManager'
+        'defaultRoles' => ['?'],
+        'cache' => 'cache',   // this enables RBAC caching
+    ],
+    'errorHandler' => [
+        'errorAction' => '/site/error',
+    ],
+    'view' => [
+        'class' => '\rmrevin\yii\minify\View',
+        'enableMinify' => !YII_DEBUG,
+        'web_path' => '@web', // path alias to web base
+        'base_path' => '@webroot', // path alias to web base
+        'minify_path' => '@webroot/minify', // path alias to save minify result
+        'js_position' => [ \yii\web\View::POS_END ], // positions of js files to be minified
+        'force_charset' => 'UTF-8', // charset forcibly assign, otherwise will use all of the files found charset
+        'expand_imports' => !YII_DEBUG, // whether to change @import on content
+        'compress_output' => !YII_DEBUG, // compress result html page
+        'theme' => [
+               'class'=>'common\lib\components\Theme',
+               'active'=>'adminlte',
+               'pathMap' => [ 
+                    'adminlte' => [
+                       '@app/views' => ['@app/themes/adminlte/views']
                     ],
-            ],
-        ],
-        'assetManager' => [
-            'bundles' => [
-                'dmstr\web\AdminLteAsset' => [
-                    'skin' => 'skin-black',
                 ],
-            ],
         ],
-        'log' => [
-            'traceLevel' => YII_DEBUG ? 3 : 0,
-            'targets' => [
-                [
-                    'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning'],
-                ],
+    ],
+    'assetManager' => [
+        'bundles' => [
+            'dmstr\web\AdminLteAsset' => [
+                'skin' => 'skin-black',
             ],
         ],
     ],
+    'log' => [
+        'traceLevel' => YII_DEBUG ? 3 : 0,
+        'targets' => [
+            [
+                'class' => 'yii\log\FileTarget',
+                'levels' => ['error', 'warning'],
+            ],
+        ],
+    ],
+    'urlManager' => require(__DIR__.'/_urlManager.php'),
+    'frontendCache' => require(Yii::getAlias('@frontend/config/_cache.php')),    ],
     'as access' => [
         'class' => 'backend\lib\extensions\mdmsoft\admin\components\AccessControl', //mdm\admin\components\AccessControl
         'allowActions' => [

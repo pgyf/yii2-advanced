@@ -9,7 +9,6 @@ use common\lib\validators\CaptchaValidator;
 use common\lib\helpers\App;
 use common\lib\enum\EnumAPP;
 use common\lib\helpers\Tools;
-use common\messages\Trans;
 
 
 /**
@@ -27,10 +26,10 @@ class LoginForm extends Model
     public function attributeLabels()
     {
         return [
-                'username' => Yii::t('common/models/User', 'Username'),
-                'password' => Yii::t('common/models/User', 'Password'),
-                'rememberMe' => Yii::t('common/label', 'Remember Me'),
-                'verifyCode' => Yii::t('common/label', 'Verification Code'),
+                'username' => Yii::t('models/User', 'Username'),
+                'password' => Yii::t('models/User', 'Password'),
+                'rememberMe' => Yii::t('common', 'Remember Me'),
+                'verifyCode' => Yii::t('common', 'Verification Code'),
             ];
     }
     
@@ -85,7 +84,7 @@ class LoginForm extends Model
         if (!$this->hasErrors()) {
             $user = $this->getUser();
             if(!$user || !$user->validatePassword($this->password)){
-                $this->addError($attribute, Trans::tMsg('Incorrect username or password.'));
+                $this->addError($attribute, Yii::t('common','Incorrect username or password'));
             }
         }
     }

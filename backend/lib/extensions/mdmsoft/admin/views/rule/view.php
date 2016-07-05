@@ -8,7 +8,6 @@ use yii\widgets\DetailView;
  * @var mdm\admin\models\AuthItem $model
  */
 $this->title = $model->name;
-$this->params['navActive'] = '/admin/assignment';
 $this->params['breadcrumbs'][] = ['label' => Yii::t('rbac-admin', 'Rules'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

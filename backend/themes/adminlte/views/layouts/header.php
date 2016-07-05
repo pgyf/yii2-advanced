@@ -1,14 +1,17 @@
 <?php
 use yii\helpers\Html;
-use common\messages\Trans;
+use common\lib\helpers\App;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
+$identity = App::getIdentity(true);
+$nickname =  $identity->userProfile->nickname;
+$create_time = Yii::$app->formatter->asDate($identity->create_time);
 ?>
 
 <header class="main-header">
 
-    <?= Html::a('<span class="logo-mini">APP</span><span class="logo-lg">' . Trans::t('App name') . '</span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>
+    <?= Html::a('<span class="logo-mini">APP</span><span class="logo-lg">' . Yii::t('backend','Application Name') . '</span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>
 
     <nav class="navbar navbar-static-top" role="navigation">
 
@@ -230,18 +233,19 @@ use common\messages\Trans;
 
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="<?= $directoryAsset ?>/img/avatar.png" class="user-image" alt="User Image"/>
-                        <span class="hidden-xs">Alexander Pierce</span>
+                        
+                        <img src="<?= $identity->userProfile->getAvatar($directoryAsset.'/img/avatar.png') ?>" class="user-image" alt="User Image"/>
+                        <span class="hidden-xs"><?= $nickname?></span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-                            <img src="<?= $directoryAsset ?>/img/avatar.png" class="img-circle"
+                            <img src="<?= $identity->userProfile->getAvatar($directoryAsset.'/img/avatar.png') ?>" class="img-circle"
                                  alt="User Image"/>
 
                             <p>
-                                Alexander Pierce - Web Developer
-                                <small>Member since Nov. 2012</small>
+                                <?= $nickname?>
+                                <small><?= Yii::t('backend','Member since {time}',['time' => $create_time])  ?></small>
                             </p>
                         </li>
                         <!-- Menu Body -->
@@ -259,11 +263,11 @@ use common\messages\Trans;
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="#" class="btn btn-default btn-flat"><i class="fa fa-user"></i> <?= Trans::tLabel('Profile')?></a>
+                                <a href="#" class="btn btn-default btn-flat"><i class="fa fa-user"></i> <?= Yii::t('backend','Profile')?></a>
                             </div>
                             <div class="pull-right">
                                 <?= Html::a(
-                                    '<i class="fa fa-power-off"></i> '.Trans::t('Sign out'),
+                                    '<i class="fa fa-power-off"></i> '.Yii::t('common','Sign Out'),
                                     ['/site/logout'],
                                     ['data-method' => 'post', 'class' => 'btn btn-default btn-flat']
                                 ) ?>

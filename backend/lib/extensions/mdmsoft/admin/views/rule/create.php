@@ -2,22 +2,21 @@
 
 use yii\helpers\Html;
 
-/**
- * @var yii\web\View $this
- * @var mdm\admin\models\AuthItem $model
- */
+/* @var $this  yii\web\View */
+/* @var $model mdm\admin\models\BizRule */
 
 $this->title = Yii::t('rbac-admin', 'Create Rule');
-$this->params['navActive'] = '/admin/assignment';
 $this->params['breadcrumbs'][] = ['label' => Yii::t('rbac-admin', 'Rules'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="auth-item-create">
 
-	<h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode($this->title) ?></h1>
 
-	<?php echo $this->render('_form', [
+    <?=
+    $this->render('_form', [
         'model' => $model,
-    ]); ?>
+    ]);
+    ?>
 
 </div>

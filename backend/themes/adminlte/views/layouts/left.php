@@ -1,5 +1,9 @@
 <?php
   use backend\lib\extensions\mdmsoft\admin\components\MenuHelper;
+  use common\lib\helpers\App;
+  $identity = App::getIdentity(true);
+    $nickname =  $identity->userProfile->nickname;
+    $create_time = Yii::$app->formatter->asDate($identity->create_time);
 ?>
 <aside class="main-sidebar">
 
@@ -8,12 +12,12 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="img-circle" alt="User Image"/>
+                <img src="<?= $identity->userProfile->getAvatar($directoryAsset.'/img/avatar.png') ?>" class="img-circle" alt="User Image"/>
             </div>
             <div class="pull-left info">
-                <p>Alexander Pierce</p>
+                <p><?=$nickname?></p>
 
-                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                <a href="javascript:;"><i class="fa fa-circle text-success"></i> <?=$create_time?></a>
             </div>
         </div>
 
@@ -35,7 +39,7 @@
             $data = eval($menu['data']);
             $active = $navActive && $navActive == $menu['route'] ? true : false;
             return [
-                'label' => $menu['name'], 
+                'label' => $menu['label'], 
                 'icon' => 'fa fa-'.$menu['icon'],
                 'url' => [$menu['route']],
                 'options' => $data ? $data : [],

@@ -1,7 +1,6 @@
 <?php
 use yii\helpers\Html;
 use common\lib\themes\adminlte\MainAsset;
-use common\messages\Trans;
 /* @var $this \yii\web\View */
 /* @var $content string */
 
@@ -29,7 +28,7 @@ if (Yii::$app->controller->action->id === 'login') {
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="viewport" content="width=device-width, initial-scale=1 ,maximum-scale=1, user-scalable=no">
         <?= Html::csrfMetaTags() ?>
-        <title><?= Trans::t('App name').' - '.Html::encode($this->title) ?></title>
+        <title><?= Yii::t('backend','Application Name').' - '.Html::encode($this->title) ?></title>
         <?php $this->head() ?>
     </head>
     <body class="hold-transition skin-blue sidebar-mini">

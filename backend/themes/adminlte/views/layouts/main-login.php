@@ -1,14 +1,12 @@
 <?php
-
 use yii\helpers\Html;
 use common\lib\themes\adminlte\MainAsset;
-use common\messages\Trans;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
-
+$applicationName = Yii::t('backend','Application Name');
 MainAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -20,24 +18,24 @@ MainAsset::register($this);
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1 ,maximum-scale=1, user-scalable=no">
     <?= Html::csrfMetaTags() ?>
-    <title><?= Trans::t('App name').' - '.Html::encode($this->title) ?></title>
+    <title><?= $applicationName.' - '.Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
 <body class="login-page">
 
     <?php
     NavBar::begin([
-        'brandLabel' => Trans::t('App name'),
+        'brandLabel' => $applicationName,
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
-    $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-    ];
+//    $menuItems = [
+//        ['label' => 'Home', 'url' => ['/site/index']],
+//    ];
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+//        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
         $menuItems[] = [
             'label' => 'Logout (' . Yii::$app->user->identity->username . ')',

@@ -4,13 +4,12 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 
-/**
- * @var yii\web\View $this
- * @var yii\data\ActiveDataProvider $dataProvider
- * @var mdm\admin\models\AuthItemSearch $searchModel
- */
+/* @var $this  yii\web\View */
+/* @var $model mdm\admin\models\BizRule */
+/* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $searchModel mdm\admin\models\searchs\BizRule */
+
 $this->title = Yii::t('rbac-admin', 'Rules');
-$this->params['navActive'] = '/admin/assignment';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="role-index">
@@ -21,11 +20,8 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a(Yii::t('rbac-admin', 'Create Rule'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
-    <?php
-    Pjax::begin([
-        'enablePushState'=>false,
-    ]);
-    echo GridView::widget([
+    <?=
+    GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
@@ -37,7 +33,6 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\ActionColumn',],
         ],
     ]);
-    Pjax::end();
     ?>
 
 </div>

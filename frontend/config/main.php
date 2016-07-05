@@ -8,9 +8,11 @@ $params = array_merge(
 
 return [
     'id' => 'app-frontend',
+    'homeUrl'=>Yii::getAlias('@frontendUrl'),
     'basePath' => dirname(__DIR__),
-    'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
+    'defaultRoute' => 'site/index', 
+    'bootstrap' => ['log'],
     'components' => [
         'user' => [
             'identityClass' => 'common\models\User',
@@ -43,6 +45,7 @@ return [
                 '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
             ]
         ],
+        'cache' => require(__DIR__.'/_cache.php'),
     ],
     'params' => $params,
 ];

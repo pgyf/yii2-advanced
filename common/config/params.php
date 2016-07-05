@@ -1,6 +1,7 @@
 <?php
 $params = [
-    'adminEmail' => 'admin@example.com',
+    'adminEmail' => env('ADMIN_EMAIL'),
+    'robotEmail' => env('ROBOT_EMAIL'),
     'supportEmail' => 'support@example.com',
     'user.passwordResetTokenExpire' => 3600,
     'pager.pageSize' => 20,

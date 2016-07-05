@@ -9,7 +9,7 @@ use Yii;
  *
  * @property string $id
  * @property string $user_id
- * @property string $name
+ * @property string $nickname
  * @property string $email
  * @property integer $gender
  * @property integer $birthday
@@ -36,7 +36,7 @@ class UserProfile extends \common\lib\base\ActiveRecord
         return [
             [['user_id', 'update_user', 'update_time'], 'required'],
             [['user_id', 'gender', 'birthday', 'update_user', 'update_time', 'update_ip'], 'integer'],
-            [['name'], 'string', 'max' => 32],
+            [['nickname'], 'string', 'max' => 32],
             [['email', 'avatar'], 'string', 'max' => 255],
             [['user_id'], 'unique']
         ];
@@ -50,7 +50,7 @@ class UserProfile extends \common\lib\base\ActiveRecord
         return [
             'id' => Yii::t('common/models/UserProfile', 'ID'),
             'user_id' => Yii::t('common/models/UserProfile', 'User ID'),
-            'name' => Yii::t('common/models/UserProfile', 'Name'),
+            'nickname' => Yii::t('common/models/UserProfile', 'Nickname'),
             'email' => Yii::t('common/models/UserProfile', 'Email'),
             'gender' => Yii::t('common/models/UserProfile', 'Gender'),
             'birthday' => Yii::t('common/models/UserProfile', 'Birthday'),

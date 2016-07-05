@@ -2,8 +2,8 @@
 
 namespace common\lib\enum;
 
+use Yii;
 use yii\helpers\ArrayHelper;
-use common\messages\Trans;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -14,7 +14,7 @@ use common\messages\Trans;
 /**
  * Description of EnumBase
  * 枚举基类
- * 枚举集合list必须安装顺序排列
+ * 枚举集合list必须按照顺序排列
  * @author liyunfang <381296986@qq.com>
  * @date 2015-01-23
  */
@@ -51,7 +51,7 @@ abstract class EnumBase extends \yii\base\Object{
         {
             return $list[$value];
         }
-        return Trans::tEnum('Unknown');
+        return Yii::t('enum','Unknown');
     }
 
     /**
@@ -112,14 +112,14 @@ abstract class EnumBase extends \yii\base\Object{
      */
     const STATUS_DISABLED  = -1;
     /**
-     * 已删除
+     * 删除
      */
     const STATUS_DELETED = -2;
   
     protected static function statusList(){
         return [
-            self::STATUS_DISABLED => Trans::tEnum('Disabled'),
-            self::STATUS_DELETED =>   Trans::tEnum('Deleted'),
+            self::STATUS_DISABLED => Yii::t('enum','Disabled'),
+            self::STATUS_DELETED =>   Yii::t('enum','Deleted'),
        ];
     }
     

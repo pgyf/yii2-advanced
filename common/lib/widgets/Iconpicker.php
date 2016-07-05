@@ -3,7 +3,7 @@
 namespace common\lib\widgets;
 
 use yii\helpers\Html;
-use common\lib\assets\bower\IconpickerAsset;
+use common\lib\assets\IconpickerAsset;
 
 /**
  * This is just an example.

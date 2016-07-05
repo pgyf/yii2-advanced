@@ -5,7 +5,7 @@ use yii\db\Migration;
 
 class m130524_201442_init extends Migration
 {
-    public function up()
+    public function safeUp()
     {
         $tableOptions = null;
         if ($this->db->driverName === 'mysql') {
@@ -49,6 +49,7 @@ class m130524_201442_init extends Migration
             'mobile' => $this->string(32),
             'email' => $this->string(),
             'password' => $this->string()->notNull(),
+            //'nickname' => $this->string(32)->notNull(),
             'auth_key' => $this->string(32)->notNull(),
             'access_token' => $this->string(32)->notNull(),
             'create_form_url' => $this->string()->notNull()->defaultValue(''),  //用户来源
@@ -74,7 +75,7 @@ class m130524_201442_init extends Migration
         $this->createTable('{{%user_profile}}', [
             'id' => $this->bigPrimaryKey(),
             'user_id' => $this->bigInteger()->notNull(),
-            'name' => $this->string(32)->notNull()->defaultValue(''),
+            'nickname' => $this->string(32)->notNull()->defaultValue(''),
             'email' => $this->string()->notNull()->defaultValue(''),
             'gender' => $this->smallInteger()->notNull()->defaultValue(0),
             'birthday' => $this->integer()->notNull()->defaultValue(0),
@@ -169,7 +170,7 @@ class m130524_201442_init extends Migration
         
     }
 
-    public function down()
+    public function safeDown()
     {
         $this->dropTable('{{%user_profile}}');
         $this->dropTable('{{%user_token}}');
