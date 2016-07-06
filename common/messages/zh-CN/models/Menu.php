@@ -3,11 +3,11 @@
     return [
         'ID' => 'ID',
         'Name' => 'Name',
-        'Label' => 'Label',
+        'Label' => '菜单名',
         'Parent' => 'Parent',
         'Route' => 'Route',
-        'Icon' => 'Icon',
+        'Icon' => '图标',
         'Order' => 'Order',
         'Data' => 'Data',
-        'Description' => 'Description',
+        'Description' => '描述',
     ];

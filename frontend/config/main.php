@@ -14,6 +14,9 @@ return [
     'defaultRoute' => 'site/index', 
     'bootstrap' => ['log'],
     'components' => [
+        'request' => [
+            'csrfParam' => '_csrf-frontend',
+        ],
         'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
@@ -45,7 +48,16 @@ return [
                 '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
             ]
         ],
-        'cache' => require(__DIR__.'/_cache.php'),
+        'cache' => function(){
+            return Yii::$app->frontendFileCache;
+        },
+       'frontendFileCache' => [
+            'class' => YII_ENV_DEV ? 'yii\caching\DummyCache' : 'yii\caching\FileCache',
+            'cachePath' => '@common/runtime/cache',
+            'keyPrefix' => 'frontend_',
+            'directoryLevel' => 1,
+        ],
+        //'cache' => require(__DIR__.'/_cache.php'),
     ],
     'params' => $params,
 ];

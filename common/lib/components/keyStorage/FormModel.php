@@ -29,6 +29,7 @@ class FormModel extends Model
     const TYPE_TEXTINPUT = 'textInput';
     const TYPE_TEXTAREA = 'textarea';
     const TYPE_CHECKBOX = 'checkbox';
+    const TYPE_RADIO = 'radio';
     const TYPE_RADIOLIST = 'radioList';
     const TYPE_CHECKBOXLIST = 'checkboxList';
     const TYPE_WIDGET = 'widget';

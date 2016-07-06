@@ -30,7 +30,8 @@
         "bower-asset/awesome-bootstrap-checkbox": "^0.3.5",
         "bower-asset/bootstrap-iconpicker": "^1.7",
         "rmrevin/yii2-minify-view": "~1.9",
-        "vlucas/phpdotenv": "^2.2"
+        "vlucas/phpdotenv": "^2.2",
+        "bower-asset/jquery-slimscroll": "^1.3"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

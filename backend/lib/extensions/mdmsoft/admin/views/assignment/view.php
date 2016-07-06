@@ -6,8 +6,6 @@ use yii\helpers\Json;
 use mdm\admin\AnimateAsset;
 use yii\web\YiiAsset;
 
-
-
 /* @var $this yii\web\View */
 /* @var $model mdm\admin\models\Assignment */
 /* @var $fullnameField string */
@@ -44,14 +42,16 @@ $animateIcon = ' <i class="glyphicon glyphicon-refresh glyphicon-refresh-animate
         </div>
         <div class="col-sm-1">
             <br><br>
-            <?=
-            Html::a('&gt;&gt;' . $animateIcon, ['assign', 'id' => (string)$model->id], [
-                'class' => 'btn btn-success btn-assign', 'data-target' => 'avaliable'])
-            ?><br>
-            <?=
-            Html::a('&lt;&lt;' . $animateIcon, ['revoke', 'id' => (string)$model->id], [
-                'class' => 'btn btn-danger btn-assign', 'data-target' => 'assigned'])
-            ?>
+            <?= Html::a('&gt;&gt;' . $animateIcon, ['assign', 'id' => (string)$model->id], [
+                'class' => 'btn btn-success btn-assign',
+                'data-target' => 'avaliable',
+                'title' => Yii::t('rbac-admin', 'Assign')
+            ]) ?><br><br>
+            <?= Html::a('&lt;&lt;' . $animateIcon, ['revoke', 'id' => (string)$model->id], [
+                'class' => 'btn btn-danger btn-assign',
+                'data-target' => 'assigned',
+                'title' => Yii::t('rbac-admin', 'Remove')
+            ]) ?>
         </div>
         <div class="col-sm-5">
             <input class="form-control search" data-target="assigned"
@@ -61,4 +61,3 @@ $animateIcon = ' <i class="glyphicon glyphicon-refresh glyphicon-refresh-animate
         </div>
     </div>
 </div>
-

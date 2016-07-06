@@ -20,7 +20,8 @@ class MainAsset extends \yii\web\AssetBundle{
 //    ];
     public $depends = [
         'common\lib\themes\adminlte\AdminLteAsset',
-        'common\lib\assets\AwesomeCheckboxAsset',
+        //'common\lib\assets\AwesomeCheckboxAsset',
+        'common\lib\assets\JquerySlimScrollAsset',
     ];
     
 }

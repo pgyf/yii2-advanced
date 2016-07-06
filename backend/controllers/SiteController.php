@@ -100,22 +100,24 @@ class SiteController extends Controller
             'keys' => [
                 'frontend.maintenance' => [
                     'label' => Yii::t('backend', 'Frontend maintenance mode'),
-                    'type' => FormModel::TYPE_DROPDOWN,
-                    'items' => [
-                        'disabled' => Yii::t('backend', 'Disabled'),
-                        'enabled' => Yii::t('backend', 'Enabled')
-                    ]
+                    'type' => FormModel::TYPE_CHECKBOX
+//                    'type' => FormModel::TYPE_DROPDOWN,
+//                    'items' => [
+//                        'disabled' => Yii::t('backend', 'Disabled'),
+//                        'enabled' => Yii::t('backend', 'Enabled')
+//                    ]
                 ],
                 'backend.theme-skin' => [
                     'label' => Yii::t('backend', 'Backend theme'),
-                    'type' => FormModel::TYPE_DROPDOWN,
+                    'type' => FormModel::TYPE_RADIOLIST,
+                    'options' => ['inline'=>true],
                     'items' => [
-                        'skin-black' => 'skin-black',
-                        'skin-blue' => 'skin-blue',
-                        'skin-green' => 'skin-green',
-                        'skin-purple' => 'skin-purple',
-                        'skin-red' => 'skin-red',
-                        'skin-yellow' => 'skin-yellow'
+                        'skin-black' => Yii::t('backend', 'Skin-Black'),
+                        'skin-blue' => Yii::t('backend', 'Skin-Blue'),
+                        'skin-green' => Yii::t('backend', 'Skin-Green'),
+                        'skin-purple' => Yii::t('backend', 'Skin-Purple'),
+                        'skin-red' => Yii::t('backend', 'Skin-Red'),
+                        'skin-yellow' => Yii::t('backend', 'Skin-Yellow'),
                     ]
                 ],
                 'backend.layout-fixed' => [
@@ -129,7 +131,11 @@ class SiteController extends Controller
                 'backend.layout-collapsed-sidebar' => [
                     'label' => Yii::t('backend', 'Backend sidebar collapsed'),
                     'type' => FormModel::TYPE_CHECKBOX
-                ]
+                ],
+                'backend.layout-sidebar-mini' => [
+                    'label' => Yii::t('backend', 'Backend sidebar mini'),
+                    'type' => FormModel::TYPE_CHECKBOX
+                ],
             ]
         ]);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {

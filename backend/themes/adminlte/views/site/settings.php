@@ -3,6 +3,7 @@
  * @author Eugene Terentev <eugene@terentev.net>
  */
 $this->title = Yii::t('backend', 'Application settings');
+$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="box">
     <div class="box-body">

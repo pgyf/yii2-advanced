@@ -41,6 +41,7 @@ class FormWidget extends Widget
             $options = ArrayHelper::getValue($config, 'options', []);
             $field = $form->field($model, $key);
             $items = ArrayHelper::getValue($config, 'items', []);
+            $inline = ArrayHelper::remove($options, 'inline');
             switch ($type) {
                 case FormModel::TYPE_TEXTINPUT:
                     $input = $field->textInput($options);
@@ -52,9 +53,18 @@ class FormWidget extends Widget
                     $input = $field->checkbox($options);
                     break;
                 case FormModel::TYPE_CHECKBOXLIST:
+                    if($inline){
+                        $input = $field->inline();
+                    }
                     $input = $field->checkboxList($items, $options);
                     break;
+                case FormModel::TYPE_RADIO:
+                    $input = $field->radio($options);
+                    break;
                 case FormModel::TYPE_RADIOLIST:
+                    if($inline){
+                        $input = $field->inline();
+                    }
                     $input = $field->radioList($items, $options);
                     break;
                 case FormModel::TYPE_TEXTAREA:

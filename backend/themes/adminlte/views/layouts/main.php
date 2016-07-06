@@ -1,9 +1,9 @@
 <?php
 use yii\helpers\Html;
 use common\lib\themes\adminlte\MainAsset;
+use yii\helpers\ArrayHelper;
 /* @var $this \yii\web\View */
 /* @var $content string */
-
 
 if (Yii::$app->controller->action->id === 'login') { 
 /**
@@ -18,10 +18,13 @@ if (Yii::$app->controller->action->id === 'login') {
 
     MainAsset::register($this);
     $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed2010/adminlte/dist');
-    ?>
-    <?php $this->beginPage() ?>
-    <!DOCTYPE html>
-    <html lang="<?= Yii::$app->language ?>">
+    
+    $this->params['body-class'] = array_key_exists('body-class', $this->params) ?
+        $this->params['body-class']
+        : null;
+ ?>
+<?php $this->beginPage() ?><!DOCTYPE html>
+<html lang="<?= Yii::$app->language ?>">
     <head>
         <meta charset="<?= Yii::$app->charset ?>"/>
         <meta name="renderer" content="webkit">
@@ -31,30 +34,40 @@ if (Yii::$app->controller->action->id === 'login') {
         <title><?= Yii::t('backend','Application Name').' - '.Html::encode($this->title) ?></title>
         <?php $this->head() ?>
     </head>
-    <body class="hold-transition skin-blue sidebar-mini">
+    <?php echo Html::beginTag('body', [
+        'class' => implode(' ', [
+            ArrayHelper::getValue($this->params, 'body-class'),
+            Yii::$app->keyStorage->get('backend.theme-skin', 'skin-blue'),
+            Yii::$app->keyStorage->get('backend.layout-fixed') ? 'fixed' : null,
+            Yii::$app->keyStorage->get('backend.layout-boxed') ? 'layout-boxed' : null,
+            Yii::$app->keyStorage->get('backend.layout-collapsed-sidebar') ? 'sidebar-collapse' : null,
+            Yii::$app->keyStorage->get('backend.layout-sidebar-mini') ? 'sidebar-mini' : null,
+        ])
+    ])?>
+<!--    <body class="hold-transition skin-blue sidebar-mini">-->
     <?php $this->beginBody() ?>
-    <div class="wrapper">
+        <div class="wrapper">
 
-        <?= $this->render(
-            'header.php',
-            ['directoryAsset' => $directoryAsset]
-        ) ?>
+            <?= $this->render(
+                'header.php',
+                ['directoryAsset' => $directoryAsset]
+            ) ?>
 
-        <?= $this->render(
-            'left.php',
-            ['directoryAsset' => $directoryAsset]
-        )
-        ?>
+            <?= $this->render(
+                'left.php',
+                ['directoryAsset' => $directoryAsset]
+            )
+            ?>
 
-        <?= $this->render(
-            'content.php',
-            ['content' => $content, 'directoryAsset' => $directoryAsset]
-        ) ?>
+            <?= $this->render(
+                'content.php',
+                ['content' => $content, 'directoryAsset' => $directoryAsset]
+            ) ?>
 
-    </div>
-
+        </div>
     <?php $this->endBody() ?>
-    </body>
+    <?php echo Html::endTag('body') ?>
+<!--    </body>-->
     </html>
     <?php $this->endPage() ?>
 <?php } ?>

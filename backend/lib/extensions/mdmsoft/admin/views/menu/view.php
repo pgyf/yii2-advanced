@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use rmrevin\yii\fontawesome\FontAwesome;
 
 /* @var $this yii\web\View */
 /* @var $model mdm\admin\models\Menu */
@@ -31,10 +32,23 @@ $this->params['breadcrumbs'][] = $this->title;
     DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'menuParent.name:text:Parent',
+           [
+                'attribute'=>'parent', 
+                'format'=>'raw', 
+                'value'=> $model->menuParent ? $model->menuParent->label : null,
+                'displayOnly'=>true
+            ],
+            //'menuParent.label:text:Parent',
             'name',
+            'label',
+            ['attribute'=>'icon', 
+              'format'=>'raw', 
+              'value'=> FontAwesome::icon($model->icon),
+              'displayOnly'=>true
+            ],
             'route',
             'order',
+            'description',
         ],
     ])
     ?>

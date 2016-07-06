@@ -47,15 +47,15 @@ class Menu extends \common\lib\base\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('common/models/Menu', 'ID'),
-            'name' => Yii::t('common/models/Menu', 'Name'),
-            'label' => Yii::t('common/models/Menu', 'Label'),
-            'parent' => Yii::t('common/models/Menu', 'Parent'),
-            'route' => Yii::t('common/models/Menu', 'Route'),
-            'icon' => Yii::t('common/models/Menu', 'Icon'),
-            'order' => Yii::t('common/models/Menu', 'Order'),
-            'data' => Yii::t('common/models/Menu', 'Data'),
-            'description' => Yii::t('common/models/Menu', 'Description'),
+            'id' => Yii::t('models/Menu', 'ID'),
+            'name' => Yii::t('models/Menu', 'Name'),
+            'label' => Yii::t('models/Menu', 'Label'),
+            'parent' => Yii::t('models/Menu', 'Parent'),
+            'route' => Yii::t('models/Menu', 'Route'),
+            'icon' => Yii::t('models/Menu', 'Icon'),
+            'order' => Yii::t('models/Menu', 'Order'),
+            'data' => Yii::t('models/Menu', 'Data'),
+            'description' => Yii::t('models/Menu', 'Description'),
         ];
     }
 

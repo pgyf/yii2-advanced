@@ -23,20 +23,20 @@ $config = [
             //'linkAssets' => true,
             'appendTimestamp' => YII_ENV_DEV,
         ],
-        'cache' => function(){
-            return Yii::$app->fileCache;
+        'commonCache' => function(){
+            return Yii::$app->commonFileCache;
         },
-       'fileCache' => [
+       'commonFileCache' => [
             'class' => 'yii\caching\FileCache',
             'cachePath' => '@common/runtime/cache',
             'keyPrefix' => 'common_',
-            'directoryLevel' => 2,
+            'directoryLevel' => 1,
         ],
         'wechatCache' => [
             'class' => 'yii\caching\FileCache',
             'cachePath' => '@common/runtime/cache',
             'keyPrefix' => 'wechat_',
-            'directoryLevel' => 2,
+            'directoryLevel' => 1,
         ],
 //        'commandBus' => [
 //            'class' => 'trntv\bus\CommandBus',
@@ -188,19 +188,19 @@ if (YII_ENV_PROD) {
 $allowedIPs = ['127.0.0.1', '::1', '192.168.1.102'];
 
 if (YII_ENV_DEV) {    
-    $config['bootstrap'][] = 'gii';
-    $config['modules']['gii'] = [
-        'class' => 'yii\gii\Module',
-        'allowedIPs' => $allowedIPs,
-        'generators' => [ //here
-                    'model' => [ //name generator
-                       'class' => 'common\lib\modules\gii\generators\model\Generator', //class generator
-                    ],
-                    'messages' => [ //name generator
-                        'class' => 'common\lib\modules\gii\generators\messages\Generator', //class generator
-                    ],
-                ],
-    ];
+//    $config['bootstrap'][] = 'gii';
+//    $config['modules']['gii'] = [
+//        'class' => 'yii\gii\Module',
+//        'allowedIPs' => $allowedIPs,
+//        'generators' => [ //here
+//                    'model' => [ //name generator
+//                       'class' => 'common\lib\modules\gii\generators\model\Generator', //class generator
+//                    ],
+//                    'messages' => [ //name generator
+//                        'class' => 'common\lib\modules\gii\generators\messages\Generator', //class generator
+//                    ],
+//                ],
+//    ];
 //    $config['components']['cache'] = [
 //        'class' => 'yii\caching\DummyCache'
 //    ];
@@ -211,13 +211,13 @@ if (YII_ENV_DEV) {
     ];
 }
 
-
-if (YII_DEBUG) {
-    $config['bootstrap'][] = 'debug';
-    $config['modules']['debug'] = [
-        'class' => 'yii\debug\Module',
-        'allowedIPs' => $allowedIPs,
-    ];
-}
+//
+//if (YII_DEBUG) {
+//    $config['bootstrap'][] = 'debug';
+//    $config['modules']['debug'] = [
+//        'class' => 'yii\debug\Module',
+//        'allowedIPs' => $allowedIPs,
+//    ];
+//}
 
 return $config;
