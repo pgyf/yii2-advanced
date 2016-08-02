@@ -11,11 +11,14 @@ namespace common\lib\assets;
 class HoverDropdownAsset extends \yii\web\AssetBundle{
 
     public $sourcePath = '@bower/bootstrap-hover-dropdown';
-    public $js = [
-        'bootstrap-hover-dropdown.min.js'
-    ];
+    public $js = [ ];
     public $depends = [
         'yii\bootstrap\BootstrapPluginAsset',
     ];
+    
+    public function init() {
+        $this->js[] = YII_DEBUG ? 'bootstrap-hover-dropdown.js' : 'bootstrap-hover-dropdown.min.js';
+        parent::init();
+    }
     
 }

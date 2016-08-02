@@ -5,7 +5,7 @@ use yii\helpers\Markdown;
 use yii\helpers\Url;
 
 /* @var $this View */
-
+$this->params['navActive'] = '/admin/assignment/index';
 if (($pos = strrpos($page, '/')) === false) {
     $baseDir = '';
     $this->title = substr($page, 0, strrpos($page, '.'));

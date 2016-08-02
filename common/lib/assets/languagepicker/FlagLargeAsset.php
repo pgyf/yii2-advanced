@@ -18,12 +18,15 @@ class FlagLargeAsset extends \yii\web\AssetBundle{
     /**
      * @inheritdoc
      */
-    public $css = [
-        'stylesheets/flags-large.min.css',
-    ];
+    public $css = [];
     
     public $depends = [
         'yii\bootstrap\BootstrapPluginAsset',
     ];
+    
+    public function init() {
+        $this->css[] = YII_DEBUG ? 'stylesheets/flags-large.css' : 'stylesheets/flags-large.min.css';
+        parent::init();
+    }
     
 }

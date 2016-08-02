@@ -16,9 +16,9 @@ use Yii;
  * @property string $auth_key
  * @property string $access_token
  * @property string $create_form_url
- * @property integer $create_aouth_app
- * @property integer $create_app
- * @property integer $create_device
+ * @property string $create_aouth_app
+ * @property string $create_app
+ * @property string $create_device
  * @property string $create_user
  * @property string $update_user
  * @property integer $create_time
@@ -26,6 +26,8 @@ use Yii;
  * @property string $create_ip
  * @property string $update_ip
  * @property integer $status
+ * @property string $login_ip
+ * @property integer $login_time
  */
 class User extends \common\lib\base\ActiveRecord
 {
@@ -44,8 +46,8 @@ class User extends \common\lib\base\ActiveRecord
     {
         return [
             [['type', 'password', 'auth_key', 'access_token', 'create_time', 'update_time'], 'required'],
-            [['type', 'create_aouth_app', 'create_app', 'create_device', 'create_user', 'update_user', 'create_time', 'update_time', 'create_ip', 'update_ip', 'status'], 'integer'],
-            [['username', 'mobile', 'auth_key', 'access_token'], 'string', 'max' => 32],
+            [['type', 'create_user', 'update_user', 'create_time', 'update_time', 'create_ip', 'update_ip', 'status', 'login_ip', 'login_time'], 'integer'],
+            [['username', 'mobile', 'auth_key', 'access_token', 'create_aouth_app', 'create_app', 'create_device'], 'string', 'max' => 32],
             [['email', 'password', 'create_form_url'], 'string', 'max' => 255],
             [['username'], 'unique'],
             [['email'], 'unique'],
@@ -78,6 +80,8 @@ class User extends \common\lib\base\ActiveRecord
             'create_ip' => Yii::t('models/User', 'Create Ip'),
             'update_ip' => Yii::t('models/User', 'Update Ip'),
             'status' => Yii::t('models/User', 'Status'),
+            'login_ip' => Yii::t('models/User', 'Login Ip'),
+            'login_time' => Yii::t('models/User', 'Login Time'),
         ];
     }
 

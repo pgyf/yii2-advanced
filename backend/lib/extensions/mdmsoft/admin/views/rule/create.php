@@ -8,6 +8,7 @@ use yii\helpers\Html;
 $this->title = Yii::t('rbac-admin', 'Create Rule');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('rbac-admin', 'Rules'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+$this->params['navActive'] = '/admin/assignment/index';
 ?>
 <div class="auth-item-create">
 

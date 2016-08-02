@@ -1,6 +1,6 @@
 <?php
 use yii\helpers\Html;
-use common\lib\themes\adminlte\MainAsset;
+use backend\themes\adminlte\assets\AppAsset;
 use yii\helpers\ArrayHelper;
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -16,7 +16,7 @@ if (Yii::$app->controller->action->id === 'login') {
     );
 } else {
 
-    MainAsset::register($this);
+    AppAsset::register($this);
     $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed2010/adminlte/dist');
     
     $this->params['body-class'] = array_key_exists('body-class', $this->params) ?
@@ -31,7 +31,7 @@ if (Yii::$app->controller->action->id === 'login') {
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <meta name="viewport" content="width=device-width, initial-scale=1 ,maximum-scale=1, user-scalable=no">
         <?= Html::csrfMetaTags() ?>
-        <title><?= Yii::t('backend','Application Name').' - '.Html::encode($this->title) ?></title>
+        <title><?= Html::encode($this->title).' - '.Yii::t('backend','Application Name') ?></title>
         <?php $this->head() ?>
     </head>
     <?php echo Html::beginTag('body', [

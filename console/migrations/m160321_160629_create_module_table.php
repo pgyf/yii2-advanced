@@ -39,7 +39,6 @@ class m160321_160629_create_module_table extends Migration
 //            'delete' => $this->smallInteger()->notNull()->defaultValue(0),
         ];
         
-        //module表 账号手机邮箱必须有一个存在
         $this->createTable('{{%module}}', [
             'id' => $this->bigPrimaryKey(),
             'name' => $this->string(64)->notNull(),

@@ -19,6 +19,11 @@ class EnumAPP extends EnumBase{
     const APP = 'app';
     
     /**
+     * 未知
+     */
+    const APP_UNKNOWN = '';
+    
+    /**
      * web网站
      */
     const APP_WEB = 'web';
@@ -41,10 +46,6 @@ class EnumAPP extends EnumBase{
      * 苹果
      */
     const APP_APPLE   = 'apple';
-    /**
-     * 未知
-     */
-    const APP_UNKNOWN = '';
    
     protected static function appList(){
         return [

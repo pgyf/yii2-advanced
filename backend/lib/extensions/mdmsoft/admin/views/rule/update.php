@@ -9,6 +9,7 @@ $this->title = Yii::t('rbac-admin', 'Update Rule') . ': ' . $model->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('rbac-admin', 'Rules'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->name]];
 $this->params['breadcrumbs'][] = Yii::t('rbac-admin', 'Update');
+$this->params['navActive'] = '/admin/assignment/index';
 ?>
 <div class="auth-item-update">
 

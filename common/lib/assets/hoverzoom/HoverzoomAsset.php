@@ -18,17 +18,10 @@ class HoverzoomAsset extends \yii\web\AssetBundle {
     
     public $depends = ['yii\web\JqueryAsset'];
     
-    private function getJs() {
-        return [
-            YII_DEBUG ? 'js/jquery.hover.zoom.js' : 'js/jquery.hover.zoom.min.js',
-        ];
-    }
     public function init() {
         $this->sourcePath =  __DIR__;
         //$this->sourcePath = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'assets';
-        if (empty($this->js)) {
-            $this->js = $this->getJs();
-        }
+        $this->js[] =  YII_DEBUG ? 'js/jquery.hover.zoom.js' : 'js/jquery.hover.zoom.min.js';
         return parent::init();
     }
 }

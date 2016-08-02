@@ -20,6 +20,7 @@ $this->title = Yii::t('rbac-admin', 'Assignment') . ' : ' . $userName;
 
 $this->params['breadcrumbs'][] = ['label' => Yii::t('rbac-admin', 'Assignments'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $userName;
+$this->params['navActive'] = '/admin/assignment/index';
 
 AnimateAsset::register($this);
 YiiAsset::register($this);

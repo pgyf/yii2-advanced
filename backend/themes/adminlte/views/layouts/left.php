@@ -1,8 +1,10 @@
 <?php
-  use backend\lib\extensions\mdmsoft\admin\components\MenuHelper;
-  use common\lib\helpers\App;
+ use yii\helpers\Html;
+ use common\lib\helpers\App;
+ use backend\lib\extensions\mdmsoft\admin\components\MenuHelper;
+
   $identity = App::getIdentity(true);
-    $nickname =  $identity->userProfile->nickname;
+    $nickname =  Html::encode($identity->userProfile->nickname);
     $create_time = Yii::$app->formatter->asDate($identity->create_time);
 ?>
 <aside class="main-sidebar">
@@ -38,14 +40,18 @@
         $callback = function($menu) use ($navActive){
             $data = eval($menu['data']);
             $active = $navActive && $navActive == $menu['route'] ? true : false;
-            return [
+            $callbackItem = [
                 'label' => $menu['label'], 
                 'icon' => 'fa fa-'.$menu['icon'],
                 'url' => [$menu['route']],
                 'options' => $data ? $data : [],
-                'active' => $active,
+                //'active' => $active,
                 'items' => $menu['children']
             ];
+            if($active){
+                $callbackItem['active'] = true;
+            }
+            return $callbackItem;
         };
         echo dmstr\widgets\Menu::widget(
             [

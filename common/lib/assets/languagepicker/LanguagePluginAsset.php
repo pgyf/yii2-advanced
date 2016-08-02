@@ -19,9 +19,7 @@ class LanguagePluginAsset extends AssetBundle {
     /**
      * @inheritdoc
      */
-    public $js = [
-        'javascripts/language-picker.min.js',
-    ];
+    public $js = [];
 
     /**
      * @inheritdoc
@@ -29,5 +27,10 @@ class LanguagePluginAsset extends AssetBundle {
     public $depends = [
         'yii\web\JqueryAsset',
     ];
+    
+    public function init() {
+        $this->js[] = YII_DEBUG ? 'javascripts/language-picker.js' : 'javascripts/language-picker.min.js';
+        parent::init();
+    }
 
 }

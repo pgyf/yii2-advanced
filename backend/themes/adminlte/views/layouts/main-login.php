@@ -1,13 +1,13 @@
 <?php
 use yii\helpers\Html;
-use common\lib\themes\adminlte\MainAsset;
+use backend\themes\adminlte\assets\AppAsset;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
 $applicationName = Yii::t('backend','Application Name');
-MainAsset::register($this);
+AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>

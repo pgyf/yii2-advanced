@@ -12,10 +12,10 @@ use Yii;
  * @property string $password
  * @property string $user_agent
  * @property integer $success
- * @property integer $app
+ * @property string $app
  * @property string $ip
  * @property integer $time
- * @property integer $device
+ * @property string $device
  */
 class UserLogin extends \common\lib\base\ActiveRecord
 {
@@ -34,8 +34,8 @@ class UserLogin extends \common\lib\base\ActiveRecord
     {
         return [
             [['username', 'password', 'time'], 'required'],
-            [['success', 'app', 'ip', 'time', 'device'], 'integer'],
-            [['username'], 'string', 'max' => 32],
+            [['success', 'ip', 'time'], 'integer'],
+            [['username', 'app', 'device'], 'string', 'max' => 32],
             [['password'], 'string', 'max' => 255],
             [['user_agent'], 'string', 'max' => 1024]
         ];
@@ -47,15 +47,15 @@ class UserLogin extends \common\lib\base\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('common/models/UserLogin', 'ID'),
-            'username' => Yii::t('common/models/UserLogin', 'Username'),
-            'password' => Yii::t('common/models/UserLogin', 'Password'),
-            'user_agent' => Yii::t('common/models/UserLogin', 'User Agent'),
-            'success' => Yii::t('common/models/UserLogin', 'Success'),
-            'app' => Yii::t('common/models/UserLogin', 'App'),
-            'ip' => Yii::t('common/models/UserLogin', 'Ip'),
-            'time' => Yii::t('common/models/UserLogin', 'Time'),
-            'device' => Yii::t('common/models/UserLogin', 'Device'),
+            'id' => Yii::t('models/UserLogin', 'ID'),
+            'username' => Yii::t('models/UserLogin', 'Username'),
+            'password' => Yii::t('models/UserLogin', 'Password'),
+            'user_agent' => Yii::t('models/UserLogin', 'User Agent'),
+            'success' => Yii::t('models/UserLogin', 'Success'),
+            'app' => Yii::t('models/UserLogin', 'App'),
+            'ip' => Yii::t('models/UserLogin', 'Ip'),
+            'time' => Yii::t('models/UserLogin', 'Time'),
+            'device' => Yii::t('models/UserLogin', 'Device'),
         ];
     }
 

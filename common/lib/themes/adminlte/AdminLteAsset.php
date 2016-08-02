@@ -11,7 +11,7 @@ namespace common\lib\themes\adminlte;
 class AdminLteAsset extends \dmstr\web\AdminLteAsset{
     
     public function init() {
-        if(!YII_ENV_PROD){
+        if(YII_DEBUG){
             $this->css = [
                 'css/AdminLTE.css',
             ];

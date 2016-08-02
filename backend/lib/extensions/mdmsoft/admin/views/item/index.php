@@ -13,6 +13,7 @@ $context = $this->context;
 $labels = $context->labels();
 $this->title = Yii::t('rbac-admin', $labels['Items']);
 $this->params['breadcrumbs'][] = $this->title;
+$this->params['navActive'] = '/admin/assignment/index';
 
 $rules = array_keys(Yii::$app->getAuthManager()->getRules());
 $rules = array_combine($rules, $rules);

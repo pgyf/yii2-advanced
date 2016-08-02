@@ -45,13 +45,13 @@ class KeyStorageItem extends \common\lib\base\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'key' => Yii::t('common/models/KeyStorageItem', 'Key'),
-            'value' => Yii::t('common/models/KeyStorageItem', 'Value'),
-            'comment' => Yii::t('common/models/KeyStorageItem', 'Comment'),
-            'create_user' => Yii::t('common/models/KeyStorageItem', 'Create User'),
-            'update_user' => Yii::t('common/models/KeyStorageItem', 'Update User'),
-            'create_time' => Yii::t('common/models/KeyStorageItem', 'Create Time'),
-            'update_time' => Yii::t('common/models/KeyStorageItem', 'Update Time'),
+            'key' => Yii::t('models/KeyStorageItem', 'Key'),
+            'value' => Yii::t('models/KeyStorageItem', 'Value'),
+            'comment' => Yii::t('models/KeyStorageItem', 'Comment'),
+            'create_user' => Yii::t('models/KeyStorageItem', 'Create User'),
+            'update_user' => Yii::t('models/KeyStorageItem', 'Update User'),
+            'create_time' => Yii::t('models/KeyStorageItem', 'Create Time'),
+            'update_time' => Yii::t('models/KeyStorageItem', 'Update Time'),
         ];
     }
 

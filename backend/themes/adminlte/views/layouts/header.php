@@ -1,11 +1,12 @@
 <?php
 use yii\helpers\Html;
+use yii\helpers\Url;
 use common\lib\helpers\App;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
 $identity = App::getIdentity(true);
-$nickname =  $identity->userProfile->nickname;
+$nickname =  Html::encode($identity->userProfile->nickname);
 $create_time = Yii::$app->formatter->asDate($identity->create_time);
 ?>
 
@@ -21,8 +22,18 @@ $create_time = Yii::$app->formatter->asDate($identity->create_time);
 
         <div class="navbar-custom-menu">
 
+            <?php
+                 $menuItems[] = \common\messages\Trans::getLanguageNames();
+                echo \yii\bootstrap\Nav::widget([
+                    'options' => ['class' => 'navbar-nav navbar-right'],
+                    'encodeLabels' => false,
+                    'items' => $menuItems,
+                ]);
+            
+            ?>
+            
             <ul class="nav navbar-nav">
-
+                
                 <!-- Messages: style can be found in dropdown.less-->
                 <li class="dropdown messages-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -263,7 +274,7 @@ $create_time = Yii::$app->formatter->asDate($identity->create_time);
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="#" class="btn btn-default btn-flat"><i class="fa fa-user"></i> <?= Yii::t('backend','Profile')?></a>
+                                <a href="<?= Url::to('/site/update-profile') ?>" class="btn btn-default btn-flat"><i class="fa fa-user"></i> <?= Yii::t('backend','Profile')?></a>
                             </div>
                             <div class="pull-right">
                                 <?= Html::a(

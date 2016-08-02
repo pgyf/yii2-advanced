@@ -10,6 +10,7 @@ use yii\widgets\Pjax;
 
 $this->title = Yii::t('rbac-admin', 'Menus');
 $this->params['breadcrumbs'][] = $this->title;
+$this->params['navActive'] = '/admin/assignment/index';
 ?>
 <div class="menu-index">
 

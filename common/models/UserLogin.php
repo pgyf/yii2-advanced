@@ -3,7 +3,7 @@
 namespace common\models;
 
 use yii\behaviors\TimestampBehavior;
-use yii\db\BaseActiveRecord;
+use common\lib\helpers\Tools;
 
 /**
  * Description of UserLogin
@@ -21,10 +21,28 @@ class UserLogin extends \common\models\table\UserLogin{
         return [
             [
                 'class' => TimestampBehavior::className(),
-                'attributes' =>  [
-                    BaseActiveRecord::EVENT_BEFORE_INSERT => ['time'],
-                ]
+                'createdAtAttribute' => 'time',
+                'updatedAtAttribute' => false,
+                'value' => function(){
+                    return Tools::getServerTime();
+                },
             ],
+        ];
+    }
+    
+    
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['username', 'password'], 'required'],
+            ['ip','filter','filter' => 'ip2long'],
+            [['success', 'ip', 'time'], 'integer'],
+            [['username', 'app', 'device'], 'string', 'max' => 32],
+            [['password'], 'string', 'max' => 255],
+            [['user_agent'], 'string', 'max' => 1024]
         ];
     }
     

@@ -1,23 +1,33 @@
 <?php
+/**
+ * @link https://github.com/phpyii
+ * @copyright Copyright (c) 2016 phpyii
+ */
+
 namespace backend\controllers;
 
 use Yii;
 use yii\filters\AccessControl;
-use yii\web\Controller;
-use common\models\form\LoginForm;
 use yii\filters\VerbFilter;
+use common\models\form\LoginForm;
 use common\lib\widgets\CaptchaAction;
 use common\lib\enum\EnumAPP;
 use common\lib\helpers\App;
 use common\lib\components\keyStorage\FormModel;
+use common\lib\base\MultiModel;
+use backend\models\User;
 
 /**
- * Site controller
+ * 默认控制器
+ * @author lyf <381296986@qq.com>
+ * @date 2016-7-10
+ * @since 1.0
  */
-class SiteController extends Controller
+class SiteController extends AdminController
 {
     /**
-     * @inheritdoc
+     * behaviors
+     * @return array
      */
     public function behaviors()
     {
@@ -30,7 +40,7 @@ class SiteController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index','settings'],
+                        'actions' => ['logout', 'index','settings','update-profile'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -46,7 +56,8 @@ class SiteController extends Controller
     }
 
     /**
-     * @inheritdoc
+     * 
+     * @return array
      */
     public function actions()
     {
@@ -62,20 +73,26 @@ class SiteController extends Controller
         ];
     }
 
+    /**
+     * 首页
+     * @return string
+     */
     public function actionIndex()
     {
         return $this->render('index');
     }
 
+    /**
+     * 登录
+     * @return string|\yii\web\Response
+     */
     public function actionLogin()
     {
         if (!\Yii::$app->user->isGuest) {
             return $this->goHome();
         }
-
         $model = new LoginForm();
-        //App::validateReapet() && $model->load(Yii::$app->request->post()) 
-        if (App::load($model) && $model->login(EnumAPP::APP_WEB_ADMIN)) {
+        if (App::validateReapet() && $model->load(Yii::$app->request->post()) && $model->login(EnumAPP::APP_WEB_ADMIN)) {
             return $this->goBack();
         } else {
 //            \yii\helpers\VarDumper::dump($model->getErrors(), 10, true);
@@ -86,14 +103,21 @@ class SiteController extends Controller
         }
     }
 
+    /**
+     * 退出
+     * @return \yii\web\Response
+     */
     public function actionLogout()
     {
         Yii::$app->user->logout();
-
         return $this->goHome();
     }
     
     
+    /**
+     * 网站设置
+     * @return string|\yii\web\Response
+     */
     public function actionSettings()
     {
         $model = new FormModel([
@@ -108,7 +132,7 @@ class SiteController extends Controller
 //                    ]
                 ],
                 'backend.theme-skin' => [
-                    'label' => Yii::t('backend', 'Backend theme'),
+                    'label' => Yii::t('backend', 'Backend Theme'),
                     'type' => FormModel::TYPE_RADIOLIST,
                     'options' => ['inline'=>true],
                     'items' => [
@@ -138,7 +162,7 @@ class SiteController extends Controller
                 ],
             ]
         ]);
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if (App::validateReapet() && $model->load(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('alert', [
                 'body' => Yii::t('backend', 'Settings was successfully saved'),
                 'options' => ['class' => 'alert alert-success']
@@ -146,6 +170,37 @@ class SiteController extends Controller
             return $this->refresh();
         }
         return $this->render('settings', ['model' => $model]);
+    }
+    
+    
+
+    /**
+     * 更新登录用户资料
+     * @return string|\yii\web\Response
+     */
+    public function actionUpdateProfile()
+    {
+        $loginUser = new User(['scenario' => User::SCENARIO_UPDATE_PWD]);
+        $oldAttr = Yii::$app->user->identity->getAttributes();
+        $loginUser->setOldAttributes($oldAttr);
+        $loginUser->setAttributes($oldAttr,false);
+        //var_dump($loginUser);exit;
+        //$loginUser->id = Yii::$app->user->getId();
+        
+        $model = new MultiModel([
+            'models' => [
+                'account' => $loginUser,
+                'profile' => Yii::$app->user->identity->userProfile
+            ]
+        ]);
+        if (App::validateReapet() && $model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('alert', [
+                'options' => ['class'=>'alert-success'],
+                'body' => Yii::t('backend', 'Your account has been successfully saved')
+            ]);
+            return $this->refresh();
+        }
+        return $this->render('update-profile', ['model'=>$model]);
     }
     
 }

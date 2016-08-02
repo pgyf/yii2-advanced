@@ -3,6 +3,8 @@
 namespace common\lib\components;
 
 use Yii;
+use yii\base\Component;
+use yii\base\Event;
 use common\models\User;
 
 /**
@@ -11,24 +13,37 @@ use common\models\User;
  * @author     lyf <381296986@qq.com>
  * @date       2015-11-2
  */
-class AppBootstrap implements \yii\base\BootstrapInterface{
+class AppBootstrap extends Component implements \yii\base\BootstrapInterface{
     
-//    /**
-//     * 支持的语言
-//     * @var array
-//     */
-//    public $supportedLanguages = [];
-//    
-//    /**
-//     * cookie name
-//     * @var string
-//     */
-//    public $languageCookieName = 'language'; //_locale
-
-
-    public function bootstrap($app){
-        $this->autoLogin($app);
+    /**
+     * @var array 事件处理器 => 类名.事件名
+     */
+    private $_listeners = [
+        //'common\lib\listeners\ViewArticleListener' => 'common\models\Article.viewArticle'
+    ];
+    /**
+     * @return array
+     */
+    public function listeners()
+    {
+        return $this->_listeners;
     }
+    public function addListener($class, $name, $listener)
+    {
+        Event::on($class, $name, [$listener, 'handle']);
+    }
+    //初始化监听事情
+    public function initListener(){
+        foreach ($this->listeners() as $listener => $event) {
+            list($class, $name) = explode('.', $event);
+            // 同一个键可能监听多个事件,暂时想不到好的处理方法 @分隔下
+            if (strpos($listener, '@') !== false) {
+                list($listener,$many) = explode('@', $listener);
+            }
+            Event::on($class, $name, [$listener, 'handle']);
+        }
+    }
+
     
     /**
      * 自动登录功能
@@ -42,24 +57,15 @@ class AppBootstrap implements \yii\base\BootstrapInterface{
 //      $app->user->on(\yii\web\User::EVENT_AFTER_LOGIN,['app\models\user\User', 'afterLogin']);
 //      $app->user->on(\yii\web\User::EVENT_BEFORE_LOGOUT,['app\models\user\User', 'beforeLogout']);
     }
+    
+    
+    public function bootstrap($app){
+        $this->autoLogin($app);
+        $this->initListener();
+    }
+    
 
-    /**
-     * 多语言功能
-     * @param application $app
-     */
-//    public function languageSelector($app){
-//        $cookeName = $this->languageCookieName;
-//        $preferredLanguage = isset($app->request->cookies[$cookeName]) ? (string)$app->request->cookies[$cookeName] : null;
-//        // 或者从数据库读取
-//        // $preferredLanguage = $app->user->language;
-//        if (empty($preferredLanguage)) {
-//            $preferredLanguage = $app->request->getPreferredLanguage($this->supportedLanguages);
-//        }
-//        if($preferredLanguage){
-//            $app->language = $preferredLanguage;
-//        }
-//    }
-//    
+  
     
     
     

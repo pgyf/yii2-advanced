@@ -10,6 +10,14 @@ namespace backend\lib\components;
  */
 class AppBootstrap extends \common\lib\components\AppBootstrap{
     
+    public function listeners()
+    {
+        return array_merge(parent::listeners(), [
+            'backend\lib\listeners\AdminLogListener' => 'yii\db\BaseActiveRecord.afterUpdate',
+        ]);
+    }
+    
+    
     public function bootstrap($app){
         parent::bootstrap($app);
 //        $app->user->on(\yii\web\User::EVENT_BEFORE_LOGIN,['app\models\user\User', 'beforeLogin']);

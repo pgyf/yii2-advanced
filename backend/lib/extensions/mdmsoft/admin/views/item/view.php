@@ -15,6 +15,7 @@ $labels = $context->labels();
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('rbac-admin', $labels['Items']), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+$this->params['navActive'] = '/admin/assignment/index';
 
 AnimateAsset::register($this);
 YiiAsset::register($this);

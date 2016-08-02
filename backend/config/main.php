@@ -15,7 +15,7 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => [
         'log',
-        'backend\lib\components\AppBootstrap',
+        'appBootstrap',
     ],
     'modules' => [
     'admin' => [
@@ -118,15 +118,17 @@ return [
             ],
         ],
         'urlManager' => require(__DIR__.'/_urlManager.php'),
-        'frontendCache' => require(Yii::getAlias('@frontend/config/_cache.php')),    ],
-        'as access' => [
-            'class' => 'backend\lib\extensions\mdmsoft\admin\components\AccessControl', //mdm\admin\components\AccessControl
-            'allowActions' => [
-                'site/*',
-                'admin/*', //生产环境应该移除
-                'gii/*', //生产环境应该移除
-                'debug/*', //生产环境应该移除
-            ]
-        ],
-        'params' => $params,
+        'frontendCache' => require(Yii::getAlias('@frontend/config/_cache.php')),
+        'appBootstrap' => \backend\lib\components\AppBootstrap::className(),
+    ],
+    'as access' => [
+        'class' => 'backend\lib\extensions\mdmsoft\admin\components\AccessControl', //mdm\admin\components\AccessControl
+        'allowActions' => [
+            'site/*',
+            'admin/*', //生产环境应该移除
+            'gii/*', //生产环境应该移除
+            'debug/*', //生产环境应该移除
+        ]
+    ],
+    'params' => $params,
 ];

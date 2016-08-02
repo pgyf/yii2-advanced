@@ -19,9 +19,12 @@ class LanguageSmallIconsAsset extends AssetBundle {
     /**
      * @inheritdoc
      */
-    public $css = [
-        'stylesheets/language-picker.min.css',
-        'stylesheets/flags-small.min.css',
-    ];
+    public $css = [];
+    
+    public function init() {
+        $this->css[] = YII_DEBUG ? 'stylesheets/language-picker.css' : 'stylesheets/language-picker.min.css';
+        $this->css[] = YII_DEBUG ? 'stylesheets/flags-small.css' : 'stylesheets/flags-small.min.css';
+        parent::init();
+    }
 
 }

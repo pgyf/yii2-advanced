@@ -48,16 +48,16 @@ class UserProfile extends \common\lib\base\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('common/models/UserProfile', 'ID'),
-            'user_id' => Yii::t('common/models/UserProfile', 'User ID'),
-            'nickname' => Yii::t('common/models/UserProfile', 'Nickname'),
-            'email' => Yii::t('common/models/UserProfile', 'Email'),
-            'gender' => Yii::t('common/models/UserProfile', 'Gender'),
-            'birthday' => Yii::t('common/models/UserProfile', 'Birthday'),
-            'avatar' => Yii::t('common/models/UserProfile', 'Avatar'),
-            'update_user' => Yii::t('common/models/UserProfile', 'Update User'),
-            'update_time' => Yii::t('common/models/UserProfile', 'Update Time'),
-            'update_ip' => Yii::t('common/models/UserProfile', 'Update Ip'),
+            'id' => Yii::t('models/UserProfile', 'ID'),
+            'user_id' => Yii::t('models/UserProfile', 'User ID'),
+            'nickname' => Yii::t('models/UserProfile', 'Nickname'),
+            'email' => Yii::t('models/UserProfile', 'Email'),
+            'gender' => Yii::t('models/UserProfile', 'Gender'),
+            'birthday' => Yii::t('models/UserProfile', 'Birthday'),
+            'avatar' => Yii::t('models/UserProfile', 'Avatar'),
+            'update_user' => Yii::t('models/UserProfile', 'Update User'),
+            'update_time' => Yii::t('models/UserProfile', 'Update Time'),
+            'update_ip' => Yii::t('models/UserProfile', 'Update Ip'),
         ];
     }
 

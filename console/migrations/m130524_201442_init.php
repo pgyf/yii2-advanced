@@ -18,24 +18,24 @@ class m130524_201442_init extends Migration
 
         //创建时间
         $createTimeField = [
-            'create_time' => $this->integer()->notNull(),
+            'create_time' => $this->integer()->notNull()->comment("创建时间"),
         ];
         //更新时间
         $updateTimeField = [
-            'update_time' => $this->integer()->notNull(),
+            'update_time' => $this->integer()->notNull()->comment("更新时间"),
         ];
         //创建IP
         $createIpField = [
-            'create_ip' => $this->bigInteger()->notNull()->defaultValue(0),
+            'create_ip' => $this->bigInteger()->notNull()->defaultValue(0)->comment("创建IP"),
         ];
         //更新IP
         $updateIpField = [
-            'update_ip' => $this->bigInteger()->notNull()->defaultValue(0),
+            'update_ip' => $this->bigInteger()->notNull()->defaultValue(0)->comment("更新IP"),
         ];
         
         //公共字段
         $commonField = [
-            'status' => $this->smallInteger()->notNull()->defaultValue(0),
+            'status' => $this->smallInteger()->notNull()->defaultValue(0)->comment("状态"),
 //            'disable' => $this->smallInteger()->notNull()->defaultValue(0),
 //            'delete' => $this->smallInteger()->notNull()->defaultValue(0),
         ];
@@ -53,14 +53,16 @@ class m130524_201442_init extends Migration
             'auth_key' => $this->string(32)->notNull(),
             'access_token' => $this->string(32)->notNull(),
             'create_form_url' => $this->string()->notNull()->defaultValue(''),  //用户来源
-            'create_aouth_app' => $this->smallInteger()->notNull()->defaultValue(0), //第三方应用 0未知
-            'create_app' => $this->smallInteger()->notNull()->defaultValue(0),   //注册平台  0 未知
-            'create_device' => $this->smallInteger()->notNull()->defaultValue(0), //注册设备 0未知
+            'create_aouth_app' => $this->string(32)->notNull()->defaultValue(''), //第三方应用 0未知
+            'create_app' => $this->string(32)->notNull()->defaultValue(''),   //注册平台  0 未知
+            'create_device' => $this->string(32)->notNull()->defaultValue(''), //注册设备 0未知
             //'password_reset_token' => $this->string()->unique(),
             //'password_reset_time' => $this->integer()->notNull(),
             //'email_verified' => $this->smallInteger()->notNull()->defaultValue(0),
             'create_user' => $this->bigInteger()->notNull()->defaultValue(0),
             'update_user' => $this->bigInteger()->notNull()->defaultValue(0),
+            'login_ip' => $this->bigInteger()->notNull()->defaultValue(0)->comment("登录IP"),
+            'login_time' => $this->integer()->notNull()->defaultValue(0)->comment("登录时间"),
         ] 
         + $createTimeField + $updateTimeField
         + $createIpField + $updateIpField
@@ -96,10 +98,10 @@ class m130524_201442_init extends Migration
             'password' => $this->string()->notNull(),
             'user_agent' => $this->string(1024)->notNull()->defaultValue(''),
             'success' => $this->smallInteger()->notNull()->defaultValue(0),
-            'app' => $this->smallInteger()->notNull()->defaultValue(0),
+            'app' => $this->string(32)->notNull()->defaultValue(''),
             'ip' => $this->bigInteger()->notNull()->defaultValue(0),
             'time' => $this->integer()->notNull(),
-            'device' => $this->smallInteger()->notNull()->defaultValue(0), //设备 0未知
+            'device' => $this->string(32)->notNull()->defaultValue(''), //设备 0未知
         ], $tableOptions);
         $this->createIndex('user_login_index_username', '{{%user_login}}', 'username');
  

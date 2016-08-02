@@ -1,18 +1,30 @@
 <?php
+/**
+ * @link https://github.com/phpyii
+ * @copyright Copyright (c) 2016 phpyii
+ */
+
 namespace backend\controllers;
+
 use Yii;
+use yii\helpers\ArrayHelper;
+use yii\web\NotFoundHttpException;
+use yii\filters\VerbFilter;
+use common\lib\traits\ControllerTrait;
 use backend\models\User;
 use backend\models\form\UserForm;
 use backend\models\search\UserSearch;
-use yii\helpers\ArrayHelper;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+
 /**
- * UserController implements the CRUD actions for User model.
+ * 用户控制器
+ * @author lyf <381296986@qq.com>
+ * @date 2016-7-10
+ * @since 1.0
  */
-class UserController extends Controller
+class UserController extends AdminController
 {
+    use ControllerTrait;
+    
     public function behaviors()
     {
         return [
@@ -72,8 +84,8 @@ class UserController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = new UserForm();
-        $model->setModel($this->findModel($id));
+        $model = $this->findModel($id);
+        $this->performAjaxValidation($model);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
         }
@@ -106,7 +118,7 @@ class UserController extends Controller
         if (($model = User::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException(Yii::t('common', 'The requested page does not exist'));
         }
     }
 }

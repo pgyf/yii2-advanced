@@ -1,4 +1,9 @@
 <?php
+/**
+ * @link https://github.com/phpyii
+ * @copyright Copyright (c) 2016 phpyii
+ */
+
 namespace backend\controllers;
 
 use Yii;
@@ -6,13 +11,15 @@ use yii\caching\Cache;
 use yii\caching\TagDependency;
 use yii\data\ArrayDataProvider;
 use yii\filters\VerbFilter;
-use yii\web\Controller;
 use yii\web\HttpException;
+
 /**
- * Class CacheController
- * @package backend\controllers
+ * Cache操作控制器
+ * @author lyf <381296986@qq.com>
+ * @date 2016-7-10
+ * @since 1.0
  */
-class CacheController extends Controller
+class CacheController extends AdminController
 {
     /**
      * @return string

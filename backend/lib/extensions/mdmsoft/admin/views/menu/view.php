@@ -10,6 +10,7 @@ use rmrevin\yii\fontawesome\FontAwesome;
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('rbac-admin', 'Menus'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+$this->params['navActive'] = '/admin/assignment/index';
 ?>
 <div class="menu-view">
 

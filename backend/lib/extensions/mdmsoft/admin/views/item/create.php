@@ -11,6 +11,7 @@ $labels = $context->labels();
 $this->title = Yii::t('rbac-admin', 'Create ' . $labels['Item']);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('rbac-admin', $labels['Items']), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+$this->params['navActive'] = '/admin/assignment/index';
 ?>
 <div class="auth-item-create">
     <h1><?= Html::encode($this->title) ?></h1>

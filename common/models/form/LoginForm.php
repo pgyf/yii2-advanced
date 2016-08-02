@@ -97,7 +97,7 @@ class LoginForm extends Model
     public function login($app)
     {
         if ($this->validate()) {
-            if($this->getUser()->validateUser($app, $errorMsg)){
+            if($this->getUser()->validateLogin($app, $errorMsg)){
                 $this->log($app, 1);
                 return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
             }
@@ -112,7 +112,7 @@ class LoginForm extends Model
     /**
      * Finds user by [[username]]
      *
-     * @return User|null
+     * @return \common\models\User
      */
     protected function getUser()
     {
@@ -122,7 +122,11 @@ class LoginForm extends Model
         return $this->_user;
     }
     
-
+    /**
+     * 记录登录日志
+     * @param string $app
+     * @param int $success
+     */
     protected function log($app, $success = 0){
         $loginLog = new UserLogin();
         $loginLog->username = $this->username;
@@ -132,7 +136,11 @@ class LoginForm extends Model
         $loginLog->app = $app;
         $loginLog->device = EnumAPP::getDevice();
         $loginLog->success = $success;
-        $loginLog->insert(false);
+        $loginLog->save();
+        //更新用户登录次数
+        if($success){
+            Yii::$app->db->createCommand()->update('{{%user}}', ['login_ip' => Tools::getClientIP(1),'login_time' => Tools::getServerTime()],['id' => $this->getUser()->id])->execute();
+        }
     }
     
 }

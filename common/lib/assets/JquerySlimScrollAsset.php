@@ -11,11 +11,14 @@ namespace common\lib\assets;
 class JquerySlimScrollAsset extends \yii\web\AssetBundle{
 
     public $sourcePath = '@bower/jquery-slimscroll';
-    public $js = [
-        'jquery.slimscroll.min.js'
-    ];
+    public $js = [];
     public $depends = [
         'yii\web\JqueryAsset'
     ];
+    
+    public function init() {
+        $this->js[] = YII_DEBUG ? 'jquery.slimscroll.js' : 'jquery.slimscroll.min.js';
+        parent::init();
+    }
     
 }

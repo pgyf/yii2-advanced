@@ -20,4 +20,9 @@
         'Create Ip' => 'Create Ip',
         'Update Ip' => 'Update Ip',
         'Status' => '状态',
+	'Login Ip' => '登录IP',
+        'Login Time' => '登录时间',
+        'New Password' => '新密码',
+        'Confirm Password' => '确认密码',
+        'Old Password' => '旧密码',
     ];

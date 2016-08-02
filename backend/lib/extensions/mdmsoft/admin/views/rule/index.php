@@ -11,6 +11,7 @@ use yii\widgets\Pjax;
 
 $this->title = Yii::t('rbac-admin', 'Rules');
 $this->params['breadcrumbs'][] = $this->title;
+$this->params['navActive'] = '/admin/assignment/index';
 ?>
 <div class="role-index">
 

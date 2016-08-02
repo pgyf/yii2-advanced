@@ -2,6 +2,10 @@
 
 namespace common\models;
 
+use yii\behaviors\TimestampBehavior;
+use yii\behaviors\BlameableBehavior;
+use common\lib\helpers\Tools;
+use common\lib\behaviors\IpBehavior;
 
 /**
  * Description of UserProfile
@@ -11,7 +15,53 @@ namespace common\models;
  */
 class UserProfile extends \common\models\table\UserProfile{
 
-
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => TimestampBehavior::className(),
+                'createdAtAttribute' => false,
+                'updatedAtAttribute' => 'update_time',
+                'value' => function(){
+                    return Tools::getServerTime();
+                },
+            ],
+            [
+                'class' => BlameableBehavior::className(),
+                'createdByAttribute' => false,
+                'updatedByAttribute' => 'update_user',
+            ],
+            [
+                'class' => IpBehavior::className(),
+                'createIpAttributes' => false,
+                'updateIpAttributes' => 'update_ip',
+            ],
+        ];
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['user_id'], 'required'],
+            [['user_id', 'gender', 'birthday', 'update_user', 'update_time', 'update_ip'], 'integer'],
+            ['update_ip','filter','filter' => 'ip2long'],
+            [['nickname','email'],'trim'],
+            [['nickname','email'],'filter','filter' => '\common\lib\helpers\Tools::filterInput'],
+            ['email','email'],
+            [['nickname'], 'string', 'max' => 32],
+            [['email', 'avatar'], 'string', 'max' => 255],
+            ['user_id', 'unique'],
+            ['user_id', 'exist','targetClass' => User::className(),'targetAttribute' => 'id'],
+        ];
+    }
+    
+    
     /**
      * @return \yii\db\ActiveQuery
      */

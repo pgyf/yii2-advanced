@@ -53,6 +53,7 @@ class EnumUser extends EnumBase{
     public static $backendTypeList = [
         self::TYPE_MANAGER,
         self::TYPE_BACKEND_USER,
+        self::TYPE_USER,
     ];
     /**
      *可登录前台的用户类型

@@ -46,43 +46,97 @@ class Tools {
                 }
             }
         }
-        return 'Unknown';
+        return '';
     }
 	
    /**
      * 获取客户端IP地址
      * @param integer $type 返回类型 0 返回IP地址 1 返回IPV4地址数字
-     * @param boolean $adv 是否进行高级模式获取（有可能被伪装） 
+     * @param boolean $filterLocal 是否过滤本地ip
      * @return mixed
      */
-    public static function getClientIP($type = 1,$adv = true) {
-//        $type       =  $type ? 1 : 0;
-//        static $ip  =   NULL;
-//        if ($ip !== NULL) return $ip[$type];
-//        if($adv){
-//            if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-//                $arr    =   explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
-//                $pos    =   array_search('unknown',$arr);
-//                if(false !== $pos) unset($arr[$pos]);
-//                $ip     =   trim($arr[0]);
-//            }elseif (isset($_SERVER['HTTP_CLIENT_IP'])) {
-//                $ip     =   $_SERVER['HTTP_CLIENT_IP'];
-//            }elseif (isset($_SERVER['REMOTE_ADDR'])) {
-//                $ip     =   $_SERVER['REMOTE_ADDR'];
-//            }
-//        }elseif (isset($_SERVER['REMOTE_ADDR'])) {
-//            $ip     =   $_SERVER['REMOTE_ADDR'];
-//        }
-//        // IP地址合法验证
-//        $long = sprintf("%u",ip2long($ip));
-//        $ip   = $long ? array($ip, $long) : array('0.0.0.0', 0);
-//        return $ip[$type];
-        $userIP =  self::userIP(false);
-        
-        if('Unknown' == $userIP){
-            return 0;
-        }
-        return ip2long($userIP);
+    public static function getClientIP($type = 0,$filterLocal = false) {
+        $userIP =  self::userIP($filterLocal);
+        $type == 1 && $userIP = ip2long($userIP);
+        return $userIP;
+    }
+    
+    /**
+     * 获取服务器时间戳
+     * @return int
+     */
+    public static function getServerTime(){
+        return time();
     }
 
+
+    /**
+     * 过滤用户输入
+     * @param string $input
+     * @return string
+     */
+    public static function filterInput($input){
+        $output = "";
+        if (is_array($input)) {
+               foreach($input as $var=>$val) {
+                   $output[$var] = filterInput($val);
+               }
+        }
+        else {
+            if (get_magic_quotes_gpc()) {
+                $input = stripslashes($input);
+            }
+            $search = array(
+               '@<script[^>]*?>.*?</script>@si',   // Strip out javascript
+               '@<[\/\!]*?[^<>]*?>@si',            // Strip out HTML tags
+               '@<style[^>]*?>.*?</style>@siU',    // Strip style tags properly
+               '@<![\s\S]*?--[ \t\n\r]*>@'         // Strip multi-line comments
+            );
+            $output = preg_replace($search, '', $input);
+            //$output = mysql_real_escape_string($input);
+        }
+        return $output;
+    }
+    
+    /**
+     * 生成缩略图链接 默认阿里云
+     * @param array $params
+     * @return string
+     */
+    public static function thumb($params){
+        $url = isset($params['original']) ? $params['original'] : '';
+        //宽
+        $w = isset($params['w']) ? $params['w'] : 0;
+        //高
+        $h = isset($params['h']) ? $params['h'] : 0;
+        //是否正方形
+        $square = isset($params['square']) ? $params['square'] : false;
+        $style = array();
+        if($w){
+            $style[] = $w.'w';
+        }
+        if($h){
+            $style[] = $h.'h';
+        }
+        if($style){
+            $url.= '@'.implode('_', $style);
+            if($square){
+                $url.= '_1e_1c';
+            }
+        }
+        return $url;
+    }
+
+    /**
+     * urlencode
+     * @param $url
+     * @return mixed
+     */
+    public static function urlencode($url) {
+        if($url && strpos($url,'%') === false){
+            return urlencode($url);
+        }
+        return $url;
+    }
+    
 }
