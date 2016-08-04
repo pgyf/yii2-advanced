@@ -39,7 +39,7 @@ class User extends \common\models\User{
         return  array_merge(parent::rules(),
         [
             ['username', 'string', 'min' => 2 , 'max' => 32],
-            ['type', 'in', 'range' => EnumUser::$backendTypeList],
+            ['type', 'in', 'range' => EnumUser::getAllValue(EnumUser::TYPE)],
             ['status', 'default', 'value' => EnumUser::STATUS_ACTIVE],
             //修改密码部分
             ['password_new', 'trim'],
@@ -80,6 +80,17 @@ class User extends \common\models\User{
                 ],
         ]);
     }
+    
+    /**
+     * 场景事务
+     * @return array
+     */
+//    public function transactions()
+//    {
+//        $transactions = parent::transactions();
+//        $transactions[self::SCENARIO_UPDATE_PWD] = self::OP_ALL;
+//        return $transactions;
+//    }
     
     
 }

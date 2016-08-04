@@ -22,6 +22,9 @@
         'Status' => '状态',
 	'Login Ip' => '登录IP',
         'Login Time' => '登录时间',
+        'Deleted' => '是否删除',
+        
+        'Deleted Time' => '删除时间',
         'New Password' => '新密码',
         'Confirm Password' => '确认密码',
         'Old Password' => '旧密码',

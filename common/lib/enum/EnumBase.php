@@ -105,23 +105,5 @@ abstract class EnumBase extends \yii\base\Object{
 //    }
     
     
-  
-    const STATUS = 'status';
-    /**
-     * 禁用
-     */
-    const STATUS_DISABLED  = -1;
-    /**
-     * 删除
-     */
-    const STATUS_DELETED = -2;
-  
-    protected static function statusList(){
-        return [
-            self::STATUS_DISABLED => Yii::t('enum','Disabled'),
-            self::STATUS_DELETED =>   Yii::t('enum','Deleted'),
-       ];
-    }
-    
 
 }

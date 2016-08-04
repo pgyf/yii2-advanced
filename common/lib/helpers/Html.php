@@ -2,14 +2,29 @@
 
 namespace common\lib\helpers;
 
+use Yii;
+use yii\helpers\ArrayHelper;
+
 /**
  * Description of Html
  *
  * @author     lyf <381296986@qq.com>
  * @date       2015-11-15
  */
-class Html extends \kartik\helpers\Html{
+class Html extends \yii\helpers\Html{
 
+    /**
+     * 带锁定的提交按钮
+     * @param type $content
+     * @param type $options
+     */
+    public static function submitLockButton($content = 'Submit', $options = array()) {
+        $lockMsg = ArrayHelper::remove($options, 'lockMsg', Yii::t('common','Submit ...')); 
+        $options['data']['loading-text'] = '<i class="fa fa-spinner fa-spin"></i> '.$lockMsg;
+        return parent::submitButton($content, $options);
+    }
+
+    
     /**
      * https://github.com/justinvoelker/yii2-awesomebootstrapcheckbox
      */

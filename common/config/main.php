@@ -55,7 +55,7 @@ $config = [
             'decimalSeparator' => '.',
             'thousandSeparator' => ',',
             'currencyCode' => 'CNY',
-            'timeZone' => 'UTC', //'PRC'
+            'timeZone' => 'PRC', //'PRC' UTC
 //            'defaultTimeZone' => 'Asia/Shanghai',
 //            'locale' => 'zh-CN',
         ],

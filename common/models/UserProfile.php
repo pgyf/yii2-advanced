@@ -52,7 +52,7 @@ class UserProfile extends \common\models\table\UserProfile{
             [['user_id', 'gender', 'birthday', 'update_user', 'update_time', 'update_ip'], 'integer'],
             ['update_ip','filter','filter' => 'ip2long'],
             [['nickname','email'],'trim'],
-            [['nickname','email'],'filter','filter' => '\common\lib\helpers\Tools::filterInput'],
+            [['nickname','email'],'filter','filter' => ['\common\lib\helpers\Tools','filterInput']],
             ['email','email'],
             [['nickname'], 'string', 'max' => 32],
             [['email', 'avatar'], 'string', 'max' => 255],
@@ -67,7 +67,7 @@ class UserProfile extends \common\models\table\UserProfile{
      */
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::className(), ['id' => 'user_id'])->inverseOf('userProfile');
     }
    
     /**

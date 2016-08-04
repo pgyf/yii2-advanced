@@ -3,29 +3,10 @@
 namespace common\lib\helpers;
 
 use Yii;
-use common\lib\enum\EnumUser;
 
 class App extends BaseApp
 {
 
-    //是否管理员类型
-    public static function isManager($admin = false){
-        $type = static::userType();
-       if($admin){
-            if(EnumUser::TYPE_ADMIN == $type){
-                return true;
-            }
-        }
-        else{
-            if(in_array($type, [EnumUser::TYPE_ADMIN,  EnumUser::TYPE_MANAGER]))
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-    
-    
     //用户类型
     public static function userType()
     {

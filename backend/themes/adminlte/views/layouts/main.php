@@ -1,11 +1,18 @@
 <?php
 use yii\helpers\Html;
-use backend\themes\adminlte\assets\AppAsset;
 use yii\helpers\ArrayHelper;
+use backend\themes\adminlte\assets\AppAsset;
+use common\lib\helpers\App;
+
 /* @var $this \yii\web\View */
 /* @var $content string */
-
-if (Yii::$app->controller->action->id === 'login') { 
+if(App::isGuest()){
+    echo $this->render(
+        'main-error',
+        ['content' => $content]
+    );
+}
+else if (Yii::$app->controller->action->id === 'login') { 
 /**
  * Do not use this code in your template. Remove it. 
  * Instead, use the code  $this->layout = '//main-login'; in your controller.

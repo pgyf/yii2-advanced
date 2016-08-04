@@ -24,6 +24,7 @@ class AppAsset extends AssetBundle
         'common\lib\themes\adminlte\AdminLteAsset',
         //'common\lib\assets\AwesomeCheckboxAsset',
         'common\lib\assets\JquerySlimScrollAsset',
+        'light\widgets\LockBsFormAsset',
     ];
     
     public function init() {

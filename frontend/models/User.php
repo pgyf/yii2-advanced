@@ -18,9 +18,6 @@ class User extends \common\models\User
         [
             ['username', 'string', 'min' => 6],
             ['password', 'string', 'min' => 6],
-            ['type', 'default', 'value' => EnumUser::TYPE_USER, 'on' => 'register'],
-            ['type', 'in', 'range' => EnumUser::$frontendTypeList, 'on' => 'register'],
-            ['status', 'default', 'value' => EnumUser::STATUS_ACTIVE, 'on' => 'register'],
         ]);
     }
     

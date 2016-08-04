@@ -1,3 +1,13 @@
+2016-8-3 16:54:17
+
+- Installing light/yii2-lock-form (1.0.2)
+
+
+2016-8-2 18:15:08
+
+- Installing bower-asset/html5shiv (v3.7.3)
+
+
 2016-7-11 00:15:08
 
 - Installing bower-asset/flot (v0.8.3)

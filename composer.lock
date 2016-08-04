@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8bd1cac50364a48bc81a9b0209c40293",
-    "content-hash": "373548d4da62df372be763ff0c0c49e9",
+    "hash": "057459315dc2df8ccdb006a8d356fe61",
+    "content-hash": "1e44e0f8a3e17016d43f4f4458e4c72a",
     "packages": [
         {
             "name": "almasaeed2010/adminlte",
@@ -682,6 +682,43 @@
                 "html"
             ],
             "time": "2013-11-30 08:25:19"
+        },
+        {
+            "name": "light/yii2-lock-form",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lichunqiang/yii2-lock-form.git",
+                "reference": "b34a32a6e28101bd9ffc5d8a933851bd8c8cbf19"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://packagist.phpcomposer.com/files/lichunqiang/yii2-lock-form/b34a32a6e28101bd9ffc5d8a933851bd8c8cbf19.zip",
+                "reference": "b34a32a6e28101bd9ffc5d8a933851bd8c8cbf19",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0",
+                "yiisoft/yii2": "^2.0.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "light\\widgets\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "lichunqiang",
+                    "email": "light-li@hotmail.com"
+                }
+            ],
+            "description": "yii2 activeform ActiveForm bootstrap loading",
+            "time": "2016-02-13 13:41:11"
         },
         {
             "name": "liyunfang/yii2-contextmenu",

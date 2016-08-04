@@ -15,11 +15,13 @@ trait UserTrait {
 
 
     /**
-     * @inheritdoc
+     * 通过id查找未删除的用户
+     * @param string $id
+     * @return \common\models\query\UserQuery
      */
     public static function findIdentity($id)
     {
-        return static::find()->andWhere(['id' => $id ])->andWhere(['!=','status', EnumUser::STATUS_DELETED])->one();
+        return static::find()->andWhere(['id' => $id ])->notDeleted()->one();
     }
 
     /**
@@ -27,7 +29,7 @@ trait UserTrait {
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        return static::find()->andWhere(['access_token' => $token ])->andWhere(['!=','status', EnumUser::STATUS_DELETED])->one();
+        return static::find()->andWhere(['access_token' => $token ])->notDeleted()->one();
         //throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
     }
 
@@ -39,7 +41,7 @@ trait UserTrait {
      */
     public static function findByUsername($username)
     {
-        return static::find()->andWhere(['username' => $username ])->andWhere(['!=','status', EnumUser::STATUS_DELETED])->one();
+        return static::find()->andWhere(['username' => $username ])->notDeleted()->one();
     }
     
     /**
@@ -50,7 +52,7 @@ trait UserTrait {
      */
     public static function findByAccount($username)
     {
-        return static::find()->andWhere(['!=','status', EnumUser::STATUS_DELETED])
+        return static::find()->notDeleted()
                 ->andWhere(['or',['username' => $username ],['mobile' => $username ],['email' => $username ]])
                 ->one();
     }
@@ -66,7 +68,7 @@ trait UserTrait {
         if (!static::isPasswordResetTokenValid($token)) {
             return null;
         }
-        return static::find()->andWhere(['password_reset_token' => $token ])->andWhere(['!=','status', EnumUser::STATUS_DELETED])->one();
+        return static::find()->andWhere(['password_reset_token' => $token ])->notDeleted()->one();
     }
 
     /**

@@ -15,34 +15,34 @@ use common\models\User;
  */
 class AppBootstrap extends Component implements \yii\base\BootstrapInterface{
     
-    /**
-     * @var array 事件处理器 => 类名.事件名
-     */
-    private $_listeners = [
-        //'common\lib\listeners\ViewArticleListener' => 'common\models\Article.viewArticle'
-    ];
-    /**
-     * @return array
-     */
-    public function listeners()
-    {
-        return $this->_listeners;
-    }
-    public function addListener($class, $name, $listener)
-    {
-        Event::on($class, $name, [$listener, 'handle']);
-    }
-    //初始化监听事情
-    public function initListener(){
-        foreach ($this->listeners() as $listener => $event) {
-            list($class, $name) = explode('.', $event);
-            // 同一个键可能监听多个事件,暂时想不到好的处理方法 @分隔下
-            if (strpos($listener, '@') !== false) {
-                list($listener,$many) = explode('@', $listener);
-            }
-            Event::on($class, $name, [$listener, 'handle']);
-        }
-    }
+//    /**
+//     * @var array 事件处理器 => 类名.事件名
+//     */
+//    private $_listeners = [
+//        //'common\lib\listeners\ViewArticleListener' => 'common\models\Article.viewArticle'
+//    ];
+//    /**
+//     * @return array
+//     */
+//    public function listeners()
+//    {
+//        return $this->_listeners;
+//    }
+//    public function addListener($class, $name, $listener)
+//    {
+//        Event::on($class, $name, [$listener, 'handle']);
+//    }
+//    //初始化监听事情
+//    public function initListener(){
+//        foreach ($this->listeners() as $listener => $event) {
+//            list($class, $name) = explode('.', $event);
+//            // 同一个键可能监听多个事件,暂时想不到好的处理方法 @分隔下
+//            if (strpos($listener, '@') !== false) {
+//                list($listener,$many) = explode('@', $listener);
+//            }
+//            Event::on($class, $name, [$listener, 'handle']);
+//        }
+//    }
 
     
     /**
@@ -61,7 +61,7 @@ class AppBootstrap extends Component implements \yii\base\BootstrapInterface{
     
     public function bootstrap($app){
         $this->autoLogin($app);
-        $this->initListener();
+        //$this->initListener();
     }
     
 

@@ -63,6 +63,7 @@ class m130524_201442_init extends Migration
             'update_user' => $this->bigInteger()->notNull()->defaultValue(0),
             'login_ip' => $this->bigInteger()->notNull()->defaultValue(0)->comment("登录IP"),
             'login_time' => $this->integer()->notNull()->defaultValue(0)->comment("登录时间"),
+            'deleted' => $this->integer()->notNull()->defaultValue(0)->comment("是否删除"),
         ] 
         + $createTimeField + $updateTimeField
         + $createIpField + $updateIpField

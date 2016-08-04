@@ -34,8 +34,10 @@ return [
         'setWritable' => [
             'backend/runtime',
             'backend/web/assets',
+            'backend/web/minify',
             'frontend/runtime',
             'frontend/web/assets',
+            'frontend/web/minify',
         ],
         'setExecutable' => [
             'yii',
@@ -51,8 +53,10 @@ return [
         'setWritable' => [
             'backend/runtime',
             'backend/web/assets',
+            'backend/web/minify',
             'frontend/runtime',
             'frontend/web/assets',
+            'frontend/web/minify',
         ],
         'setExecutable' => [
             'yii',

@@ -1,7 +1,7 @@
 <?php
-use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use rmrevin\yii\fontawesome\FA;
+use common\lib\helpers\Html;
 use common\lib\enum\EnumUserProfile;
 /* @var $this yii\web\View */
 /* @var $model common\base\MultiModel */
@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="col-sm-6">
                 
-        <?php echo Html::submitButton(FA::icon('check').' '.Yii::t('backend','Update'), ['class' => 'btn btn-primary pull-left']) ?>
+        <?php echo Html::submitLockButton(FA::icon('check').' '.Yii::t('backend','Update'), ['class' => 'btn btn-primary pull-left']) ?>
             </div>
         </div>
      </div>

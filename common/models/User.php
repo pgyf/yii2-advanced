@@ -13,6 +13,7 @@ use common\lib\enum\EnumAPP;
 use common\lib\helpers\Pattern;
 use common\lib\traits\UserTrait;
 use common\lib\helpers\Tools;
+use common\lib\behaviors\SoftDeleteBehavior;
 
 class User extends \common\models\table\User implements IdentityInterface
 {
@@ -28,7 +29,7 @@ class User extends \common\models\table\User implements IdentityInterface
     public function behaviors()
     {
         return [
-            [
+            'TimestampBehavior' =>[
                 'class' => TimestampBehavior::className(),
                 'createdAtAttribute' => 'create_time',
                 'updatedAtAttribute' => 'update_time',
@@ -36,10 +37,21 @@ class User extends \common\models\table\User implements IdentityInterface
                     return Tools::getServerTime();
                 },
             ],
-            [
+            'BlameableBehavior' => [
                 'class' => BlameableBehavior::className(),
                 'createdByAttribute' => 'create_user',
                 'updatedByAttribute' => 'update_user',
+            ],
+            'softDeleteBehavior' => [
+                'class' => SoftDeleteBehavior::className(),
+                'softDeleteAttributeValues' => [
+                    'deleted' => function($model){
+                      return Tools::getServerTime();
+                   }
+                ],
+                'restoreAttributeValues' => [
+                    'deleted' => 0,
+                ],
             ],
         ];
     }
@@ -52,7 +64,7 @@ class User extends \common\models\table\User implements IdentityInterface
         return  [
             [['username','email','mobile'], 'trim'],
             [['type', 'password', 'auth_key', 'access_token'], 'required'],
-            [['type', 'create_user', 'update_user', 'create_time', 'update_time', 'create_ip', 'update_ip', 'status', 'login_ip', 'login_time'], 'integer'],
+            [['type', 'create_user', 'update_user', 'create_time', 'update_time', 'create_ip', 'update_ip', 'status', 'login_ip', 'login_time','deleted'], 'integer'],
             [['username', 'mobile', 'auth_key', 'access_token', 'create_aouth_app', 'create_app', 'create_device'], 'string', 'max' => 32],
             [['email', 'password', 'create_form_url'], 'string', 'max' => 255],
             [['create_ip','update_ip','login_ip'],'filter','filter' => 'ip2long'],
@@ -65,10 +77,9 @@ class User extends \common\models\table\User implements IdentityInterface
             ['mobile', PhoneValidator::className()],
             ['email', 'email'],
             ['password', 'string', 'min' => 6, 'max' => 255],
-            //['type', 'default', 'value' => EnumUser::TYPE_USER, 'on' => 'register'],
-            //['type', 'in', 'range' => EnumUser::$frontendTypeList, 'on' => 'register'],
-            //['type', 'default', 'value' => EnumUser::TYPE_BACKEND_USER, 'on' => ['create','update']],
-            //['status', 'default', 'value' => EnumUser::STATUS_ACTIVE],
+            ['type', 'default', 'value' => EnumUser::TYPE_USER],
+            ['type', 'in', 'range' => EnumUser::getAllValue(EnumUser::TYPE)],
+            ['status', 'default', 'value' => EnumUser::STATUS_ACTIVE],
             ['status', 'in', 'range' => EnumUser::getAllValue(EnumUser::STATUS)],
         ];
     }
@@ -113,6 +124,17 @@ class User extends \common\models\table\User implements IdentityInterface
     }
     
 
+    /**
+     * 场景事务
+     * @return array
+     */
+//    public function transactions()
+//    {
+//        return [
+//            self::SCENARIO_DEFAULT => self::OP_ALL,
+//        ];
+//    }
+    
     
     /**
      * 验证登录应用
@@ -121,26 +143,27 @@ class User extends \common\models\table\User implements IdentityInterface
      * @return boolean
      */
     public function validateLogin($app, &$msg = ""){
-        $userStatus = $this->status;
-        $userType = $this->type;
-        $inactives = EnumUser::statusInactive();
-        if($inactives && isset($inactives[$userStatus])){
-            $msg = $inactives[$userStatus];
-            return false;
-        }
-        if(in_array($app, EnumAPP::$backendAppList)){
-            if(in_array($userType,EnumUser::$backendTypeList)){
-                return true;
-            }
-            else if($userType == EnumUser::TYPE_ADMIN){
-                return true;
-            }
-        }
-        else if(in_array($app, EnumAPP::$frontendAppList) && in_array($userType,EnumUser::$frontendTypeList)){
+        //系统用户无需验证
+        if($this->isRoot){
             return true;
         }
-        $msg =  Yii::t('You do not have permission to sign in');
-        return false;
+        //验证用户状态
+        $inactives = EnumUser::statusInactive();
+        if($inactives && isset($inactives[$this->status])){
+            $msg = $inactives[$this->status];
+            return false;
+        }
+        
+//        //后台项目
+//        if(in_array($app, EnumAPP::$backendAppList)){
+//           
+//        }
+//        //前台项目
+//        else if(in_array($app, EnumAPP::$frontendAppList)){
+//            
+//        }
+//        $msg =  Yii::t('common','You do not have permission to sign in');
+        return true;
     }
     
     /**
@@ -170,15 +193,15 @@ class User extends \common\models\table\User implements IdentityInterface
      */
     public function getUserProfile()
     {
-        return $this->hasOne(UserProfile::className(), ['user_id' => 'id']);
+        return $this->hasOne(UserProfile::className(), ['user_id' => 'id'])->inverseOf('user');
     }
     
     /**
      * 是否管理员
      * @return boolean
      */
-    public function getIsAdmin(){
-        return in_array($this->type, [EnumUser::TYPE_ADMIN , EnumUser::TYPE_MANAGER])  ? true : false;
+    public function getIsRoot(){
+        return $this->type === EnumUser::TYPE_ROOT;
     }
     
     
@@ -206,6 +229,21 @@ class User extends \common\models\table\User implements IdentityInterface
 //        // Default role
 //        $auth = Yii::$app->authManager;
 //        $auth->assign($auth->getRole(User::ROLE_USER), $this->getId());
+    }
+    
+    /**
+     * 首次增加
+     * @param type $relations
+     * @param type $runValidation
+     * @param type $attributes
+     */
+    public function insertFirst($relations,$runValidation = true, $attributes = null) {
+        $this->on(self::EVENT_AFTER_INSERT, function($event) use ($relations){
+            foreach ($relations as $m) {
+               $m->save(false);
+            }
+        });
+        return $this->save($runValidation, $attributes);
     }
     
 }

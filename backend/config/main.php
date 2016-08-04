@@ -130,5 +130,6 @@ return [
             'debug/*', //生产环境应该移除
         ]
     ],
+    'as appAdminLog' => 'backend\lib\behaviors\AppAdminLogBehavior',
     'params' => $params,
 ];

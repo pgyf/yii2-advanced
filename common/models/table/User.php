@@ -28,6 +28,7 @@ use Yii;
  * @property integer $status
  * @property string $login_ip
  * @property integer $login_time
+ * @property integer $deleted
  */
 class User extends \common\lib\base\ActiveRecord
 {
@@ -46,7 +47,7 @@ class User extends \common\lib\base\ActiveRecord
     {
         return [
             [['type', 'password', 'auth_key', 'access_token', 'create_time', 'update_time'], 'required'],
-            [['type', 'create_user', 'update_user', 'create_time', 'update_time', 'create_ip', 'update_ip', 'status', 'login_ip', 'login_time'], 'integer'],
+            [['type', 'create_user', 'update_user', 'create_time', 'update_time', 'create_ip', 'update_ip', 'status', 'login_ip', 'login_time', 'deleted'], 'integer'],
             [['username', 'mobile', 'auth_key', 'access_token', 'create_aouth_app', 'create_app', 'create_device'], 'string', 'max' => 32],
             [['email', 'password', 'create_form_url'], 'string', 'max' => 255],
             [['username'], 'unique'],
@@ -82,6 +83,7 @@ class User extends \common\lib\base\ActiveRecord
             'status' => Yii::t('models/User', 'Status'),
             'login_ip' => Yii::t('models/User', 'Login Ip'),
             'login_time' => Yii::t('models/User', 'Login Time'),
+            'deleted' => Yii::t('models/User', 'Deleted'),
         ];
     }
 

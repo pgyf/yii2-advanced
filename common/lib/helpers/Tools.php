@@ -68,6 +68,40 @@ class Tools {
     public static function getServerTime(){
         return time();
     }
+    
+    
+    /**
+     * 获取服务器毫秒时间戳
+     * @param bool $unixTimestamp 是否时间戳
+     * @param bool $asFloat 
+     * @return mixed
+     */
+    public static function getMicroTime($unixTimestamp = true,$asFloat = false){
+        if($unixTimestamp){
+            list($t1, $t2) = explode(' ', microtime());  
+            //return ((float)$t1 + (float)$t2);
+            return (float)sprintf('%.0f', (floatval($t1) + floatval($t2)) * 1000);  
+        }
+        else{
+            return microtime($asFloat);
+        }
+    }
+    
+    /**
+     * 格式化毫秒
+     * @param type $microTime
+     * @param type $format
+     * @return type
+     */
+    public static function formatMicroTime($microTime,$format = null){
+        $micro = 0;
+        $time = $microTime;
+        if(strlen($microTime) > 10){
+           $time = substr($microTime, 0, 10);
+           $micro = substr($microTime, 10);
+        }
+        return \Yii::$app->formatter->asDatetime($time,'yyyy/MM/dd HH:mm:ss').'.'.$micro;
+    }
 
 
     /**

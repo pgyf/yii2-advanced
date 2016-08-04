@@ -20,4 +20,6 @@ return [
     'The user has been disabled' => '用户已被禁用',
     'You do not have permission to sign in' => '你没有登录权限',
     'The requested page does not exist' => '你请求的页面不存在',
+    'Submit' => '提交',
+    'Submit ...' => '提交中...',
 ];

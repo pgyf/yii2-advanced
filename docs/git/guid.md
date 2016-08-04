@@ -12,6 +12,9 @@ git reset .
 增加备注
 git commit -m "项目第一次提交"  
 
+推送到远程分支
+git push origin master
+
 删除远程分支
 git push origin --delete <branchName>
 
