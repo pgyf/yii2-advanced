@@ -18,19 +18,19 @@ class m130524_201442_init extends Migration
 
         //创建时间
         $createTimeField = [
-            'create_time' => $this->integer()->notNull()->comment("创建时间"),
+            'created_at' => $this->integer()->notNull()->comment("创建时间"),
         ];
         //更新时间
         $updateTimeField = [
-            'update_time' => $this->integer()->notNull()->comment("更新时间"),
+            'updated_at' => $this->integer()->notNull()->comment("更新时间"),
         ];
         //创建IP
         $createIpField = [
-            'create_ip' => $this->bigInteger()->notNull()->defaultValue(0)->comment("创建IP"),
+            'created_ip' => $this->bigInteger()->notNull()->defaultValue(0)->comment("创建IP"),
         ];
         //更新IP
         $updateIpField = [
-            'update_ip' => $this->bigInteger()->notNull()->defaultValue(0)->comment("更新IP"),
+            'updated_ip' => $this->bigInteger()->notNull()->defaultValue(0)->comment("更新IP"),
         ];
         
         //公共字段
@@ -150,8 +150,8 @@ class m130524_201442_init extends Migration
         // insert profile data
         $columns = ['user_id', 'name','update_time'];
         $this->batchInsert('{{%user_profile}}', $columns, [
-            [1, '系统管理员', date('Y-m-d H:i:s')],
-            [2, '管理员', date('Y-m-d H:i:s')],
+            [1, '系统管理员', $time],
+            [2, '管理员', $time],
         ]);
         
         

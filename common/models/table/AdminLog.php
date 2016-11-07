@@ -10,9 +10,9 @@ use Yii;
  * @property string $id
  * @property string $route
  * @property string $description
- * @property integer $create_time
- * @property string $user_id
- * @property string $ip
+ * @property integer $created_at
+ * @property string $uid
+ * @property string $created_ip
  */
 class AdminLog extends \common\lib\base\ActiveRecord
 {
@@ -31,8 +31,8 @@ class AdminLog extends \common\lib\base\ActiveRecord
     {
         return [
             [['description'], 'string'],
-            [['create_time'], 'required'],
-            [['create_time', 'user_id', 'ip'], 'integer'],
+            [['created_at'], 'required'],
+            [['created_at', 'uid', 'created_ip'], 'integer'],
             [['route'], 'string', 'max' => 255]
         ];
     }
@@ -43,12 +43,12 @@ class AdminLog extends \common\lib\base\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('models/AdminLog', 'ID'),
-            'route' => Yii::t('models/AdminLog', 'Route'),
-            'description' => Yii::t('models/AdminLog', 'Description'),
-            'create_time' => Yii::t('models/AdminLog', 'Create Time'),
-            'user_id' => Yii::t('models/AdminLog', 'User ID'),
-            'ip' => Yii::t('models/AdminLog', 'Ip'),
+            'id' => Yii::t('common/models/AdminLog', 'ID'),
+            'route' => Yii::t('common/models/AdminLog', 'Route'),
+            'description' => Yii::t('common/models/AdminLog', 'Description'),
+            'created_at' => Yii::t('common/models/AdminLog', 'Created At'),
+            'uid' => Yii::t('common/models/AdminLog', 'Uid'),
+            'created_ip' => Yii::t('common/models/AdminLog', 'Created Ip'),
         ];
     }
 

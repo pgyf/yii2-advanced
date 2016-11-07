@@ -274,7 +274,7 @@ $create_time = Yii::$app->formatter->asDate($identity->create_time);
                         <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="<?= Url::to('/site/update-profile') ?>" class="btn btn-default btn-flat"><i class="fa fa-user"></i> <?= Yii::t('backend','Profile')?></a>
+                                <a href="<?= Url::to(['/site/update-profile']) ?>" class="btn btn-default btn-flat"><i class="fa fa-user"></i> <?= Yii::t('backend','Profile')?></a>
                             </div>
                             <div class="pull-right">
                                 <?= Html::a(

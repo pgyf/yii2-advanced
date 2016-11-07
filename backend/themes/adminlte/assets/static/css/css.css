@@ -8,6 +8,9 @@ and open the template in the editor.
     Author     : WR
 */
 
+html,body,h1,h2,h3{font-family:arial, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', '宋体', \5b8b\4f53, Tahoma, Arial, Helvetica, STHeiti}
+body{overflow-y:scroll;background:#f9f9f9;overflow-x: hidden;}
+
 /*.login-page, .register-page {
    background: rgb(247, 247, 247);
    background: #1582dc;

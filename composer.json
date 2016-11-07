@@ -19,7 +19,7 @@
         "yiisoft/yii2-bootstrap": "*",
         "yiisoft/yii2-swiftmailer": "*",
         "yiisoft/yii2-jui": "2.0.*",
-        "liyunfang/yii2-contextmenu": "1.0.5",
+        "liyunfang/yii2-contextmenu": "1.0.*",
         "liyunfang/yii2-widget-linkpager": "1.0.*",
         "mobiledetect/mobiledetectlib": "^2.8",
         "qiniu/php-sdk": "7.0.*",
@@ -42,6 +42,11 @@
         "yiisoft/yii2-debug": "*",
         "yiisoft/yii2-gii": "*",
         "yiisoft/yii2-faker": "*"
+    },
+    "autoload": {
+        "files": [
+            "helpers.php"
+        ]
     },
     "config": {
         "process-timeout": 1800

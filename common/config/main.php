@@ -1,6 +1,7 @@
 <?php
 $config = [
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
+    'runtimePath' => '@base/runtime',
     'timeZone' => 'Asia/Shanghai', //'PRC'
     'sourceLanguage'=>'en-US',
     'language' => 'zh-CN', //en-US zh-CN
@@ -156,14 +157,14 @@ $config = [
         ],
         'urlManagerBackend' => \yii\helpers\ArrayHelper::merge(
             [
-                'hostInfo' => Yii::getAlias('@backendUrl')
+                'hostInfo' => Yii::getAlias('@backendUrl') //env('BACKEND_URL')
             ],
             require(Yii::getAlias('@common/config/_urlManager.php')),
             require(Yii::getAlias('@backend/config/_urlManager.php'))
         ),
         'urlManagerFrontend' => \yii\helpers\ArrayHelper::merge(
             [
-                'hostInfo' => Yii::getAlias('@frontendUrl')
+                'hostInfo' => Yii::getAlias('@frontendUrl') //env('FRONTEND_URL')
             ],
             require(Yii::getAlias('@common/config/_urlManager.php')),
             require(Yii::getAlias('@frontend/config/_urlManager.php'))

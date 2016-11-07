@@ -36,7 +36,7 @@ class SiteController extends AdminController
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error','captcha'],
+                        'actions' => ['login', 'error','captcha','test'],
                         'allow' => true,
                     ],
                     [
@@ -202,5 +202,11 @@ class SiteController extends AdminController
         }
         return $this->render('update-profile', ['model'=>$model]);
     }
+    
+    
+    public function actionTest(){
+        return $this->render('test');
+    }
+    
     
 }

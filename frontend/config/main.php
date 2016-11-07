@@ -52,7 +52,7 @@ return [
             return Yii::$app->frontendFileCache;
         },
        'frontendFileCache' => [
-            'class' => YII_ENV_DEV ? 'yii\caching\DummyCache' : 'yii\caching\FileCache',
+            'class' => 'yii\caching\FileCache',//YII_ENV_DEV ? 'yii\caching\DummyCache' : 'yii\caching\FileCache',
             'cachePath' => '@common/runtime/cache',
             'keyPrefix' => 'frontend_',
             'directoryLevel' => 1,

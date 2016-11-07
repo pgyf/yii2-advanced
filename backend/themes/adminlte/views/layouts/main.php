@@ -73,6 +73,9 @@ else if (Yii::$app->controller->action->id === 'login') {
 
         </div>
     <?php $this->endBody() ?>
+
+    <?php if(isset($this->blocks['block_footer'])){echo $this->blocks['block_footer'];} ?>
+
     <?php echo Html::endTag('body') ?>
 <!--    </body>-->
     </html>

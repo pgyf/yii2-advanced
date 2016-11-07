@@ -28,6 +28,7 @@ AppAsset::register($this);
     <?= $content ?>
 
 <?php $this->endBody() ?>
+  <?php if(isset($this->blocks['block_footer'])){echo $this->blocks['block_footer'];} ?>
 </body>
 </html>
 <?php $this->endPage() ?>

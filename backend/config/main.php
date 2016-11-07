@@ -18,7 +18,7 @@ return [
         'appBootstrap',
     ],
     'modules' => [
-    'admin' => [
+    'rbac' => [
         'class' => 'mdm\admin\Module',
         'layout' => 'left-menu', // default to null mean use application layout.
         'mainLayout' => '@app/views/layouts/main.php',
@@ -125,7 +125,8 @@ return [
         'class' => 'backend\lib\extensions\mdmsoft\admin\components\AccessControl', //mdm\admin\components\AccessControl
         'allowActions' => [
             'site/*',
-            'admin/*', //生产环境应该移除
+            'test/*',
+            'rbac/*', //生产环境应该移除
             'gii/*', //生产环境应该移除
             'debug/*', //生产环境应该移除
         ]
